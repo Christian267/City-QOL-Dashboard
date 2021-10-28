@@ -25,10 +25,10 @@ import io.christian.cityqoldashboard.model.City;
 @EnableBatchProcessing
 public class BatchConfig {
 
-    private final String[] FIELD_NAMES = new String[] { "id", "ua_name", "ua_country", "ua_continent", "housing",
-            "cost_of_living", "startups", "venture_capital", "travel_connectivity", "commute", "business_freedom",
-            "safety", "healthcare", "education", "environmental_quality", "economy", "taxation", "internet_access",
-            "leisure_culture", "tolerance", "outdoors" };
+    private final String[] FIELD_NAMES = new String[] { "id", "uaName", "uaCountry", "uaContinent", "housing",
+            "costOfLiving", "startups", "ventureCapital", "travelConnectivity", "commute", "businessFreedom",
+            "safety", "healthcare", "education", "environmentalQuality", "economy", "taxation", "internetAccess",
+            "leisureCulture", "tolerance", "outdoors"};
 
     @Autowired
     public JobBuilderFactory jobBuilderFactory;
@@ -56,10 +56,13 @@ public class BatchConfig {
     public JdbcBatchItemWriter<City> writer(DataSource dataSource) {
         return new JdbcBatchItemWriterBuilder<City>()
                 .itemSqlParameterSourceProvider(new BeanPropertyItemSqlParameterSourceProvider<>())
-                .sql("INSERT INTO city (id,ua_name,ua_country,ua_continent,housing,cost_of_living,startups,venture_capital,travel_connectivity,commute,business_freedom,safety,healthcare,education,environmental_quality,economy)"
-                        + " VALUES (:id,:ua_name,:ua_country,:ua_continent,:housing,:cost_of_living,:startups,:venture_capital,:travel_connectivity,:commute,:business_freedom,:safety,:healthcare,:education,:environmental_quality,:economy)")
+                .sql("INSERT INTO city (id, ua_name, ua_country, ua_continent, housing, cost_of_living, startups, venture_capital, travel_connectivity, commute, business_freedom, safety, healthcare, education, environmental_quality, economy, taxation, internet_access, leisure_culture, outdoors, tolerance)"
+                           + " VALUES (:id,:uaName,:uaCountry,:uaContinent,:housing,:costOfLiving,:startups,:ventureCapital,:travelConnectivity,:commute,:businessFreedom,:safety,:healthcare,:education,:environmentalQuality,:economy,:taxation,:internetAccess,:leisureCulture,:tolerance,:outdoors)")
                 .dataSource(dataSource).build();
     }
+    
+
+
 
     @Bean
     public Job importUserJob(JobCompletionNotificationListener listener, Step step1) {

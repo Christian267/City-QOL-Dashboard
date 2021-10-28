@@ -8,50 +8,56 @@ public class City {
 
     @Id
     private long id;
-    private String ua_name;
-    private String ua_country;
-    private String ua_continent;
+    private String uaName;
+    private String uaCountry;
+    private String uaContinent;
     private float housing;
-    private float cost_of_living;
+    private float costOfLiving;
     private float startups;
-    private float venture_capital;
-    private float travel_connectivity;
+    private float ventureCapital;
+    private float travelConnectivity;
     private float commute;
-    private float business_freedom;
+    private float businessFreedom;
     private float safety;
     private float healthcare;
     private float education;
-    private float environmental_quality;
+    private float environmentalQuality;
     private float economy;
+    private float taxation;
+    private float internetAccess;
+    private float leisureCulture;
+    private float tolerance;
+    private float outdoors;
 
-    
     public City() {
     }
-
-
     
-    public City(long id, String ua_name, String ua_country, String ua_continent, float housing, float cost_of_living,
-            float startups, float venture_capital, float travel_connectivity, float commute, float business_freedom,
-            float safety, float healthcare, float education, float environmental_quality, float economy) {
+    public City(long id, String uaName, String uaCountry, String uaContinent, float housing, float costOfLiving,
+            float startups, float ventureCapital, float travelConnectivity, float commute, float businessFreedom,
+            float safety, float healthcare, float education, float environmentalQuality, float economy, float taxation,
+            float internetAccess, float leisureCulture, float tolerance, float outdoors) {
         this.id = id;
-        this.ua_name = ua_name;
-        this.ua_country = ua_country;
-        this.ua_continent = ua_continent;
+        this.uaName = uaName;
+        this.uaCountry = uaCountry;
+        this.uaContinent = uaContinent;
         this.housing = housing;
-        this.cost_of_living = cost_of_living;
+        this.costOfLiving = costOfLiving;
         this.startups = startups;
-        this.venture_capital = venture_capital;
-        this.travel_connectivity = travel_connectivity;
+        this.ventureCapital = ventureCapital;
+        this.travelConnectivity = travelConnectivity;
         this.commute = commute;
-        this.business_freedom = business_freedom;
+        this.businessFreedom = businessFreedom;
         this.safety = safety;
         this.healthcare = healthcare;
         this.education = education;
-        this.environmental_quality = environmental_quality;
+        this.environmentalQuality = environmentalQuality;
         this.economy = economy;
+        this.taxation = taxation;
+        this.internetAccess = internetAccess;
+        this.leisureCulture = leisureCulture;
+        this.tolerance = tolerance;
+        this.outdoors = outdoors;
     }
-
-
 
     public long getId() {
         return id;
@@ -59,23 +65,23 @@ public class City {
     public void setId(long id) {
         this.id = id;
     }
-    public String getUa_name() {
-        return ua_name;
+    public String getUaName() {
+        return uaName;
     }
-    public void setUa_name(String ua_name) {
-        this.ua_name = ua_name;
+    public void setUaName(String uaName) {
+        this.uaName = uaName;
     }
-    public String getUa_country() {
-        return ua_country;
+    public String getUaCountry() {
+        return uaCountry;
     }
-    public void setUa_country(String ua_country) {
-        this.ua_country = ua_country;
+    public void setUaCountry(String uaCountry) {
+        this.uaCountry = uaCountry;
     }
-    public String getUa_continent() {
-        return ua_continent;
+    public String getUaContinent() {
+        return uaContinent;
     }
-    public void setUa_continent(String ua_continent) {
-        this.ua_continent = ua_continent;
+    public void setUaContinent(String uaContinent) {
+        this.uaContinent = uaContinent;
     }
     public float getHousing() {
         return housing;
@@ -83,11 +89,11 @@ public class City {
     public void setHousing(float housing) {
         this.housing = housing;
     }
-    public float getCost_of_living() {
-        return cost_of_living;
+    public float getCostOfLiving() {
+        return costOfLiving;
     }
-    public void setCost_of_living(float cost_of_living) {
-        this.cost_of_living = cost_of_living;
+    public void setCostOfLiving(float costOfLiving) {
+        this.costOfLiving = costOfLiving;
     }
     public float getStartups() {
         return startups;
@@ -95,17 +101,17 @@ public class City {
     public void setStartups(float startups) {
         this.startups = startups;
     }
-    public float getVenture_capital() {
-        return venture_capital;
+    public float getVentureCapital() {
+        return ventureCapital;
     }
-    public void setVenture_capital(float venture_capital) {
-        this.venture_capital = venture_capital;
+    public void setVentureCapital(float ventureCapital) {
+        this.ventureCapital = ventureCapital;
     }
-    public float getTravel_connectivity() {
-        return travel_connectivity;
+    public float getTravelConnectivity() {
+        return travelConnectivity;
     }
-    public void setTravel_connectivity(float travel_connectivity) {
-        this.travel_connectivity = travel_connectivity;
+    public void setTravelConnectivity(float travelConnectivity) {
+        this.travelConnectivity = travelConnectivity;
     }
     public float getCommute() {
         return commute;
@@ -113,11 +119,11 @@ public class City {
     public void setCommute(float commute) {
         this.commute = commute;
     }
-    public float getBusiness_freedom() {
-        return business_freedom;
+    public float getBusinessFreedom() {
+        return businessFreedom;
     }
-    public void setBusiness_freedom(float business_freedom) {
-        this.business_freedom = business_freedom;
+    public void setBusinessFreedom(float businessFreedom) {
+        this.businessFreedom = businessFreedom;
     }
     public float getSafety() {
         return safety;
@@ -137,11 +143,11 @@ public class City {
     public void setEducation(float education) {
         this.education = education;
     }
-    public float getEnvironmental_quality() {
-        return environmental_quality;
+    public float getEnvironmentalQuality() {
+        return environmentalQuality;
     }
-    public void setEnvironmental_quality(float environmental_quality) {
-        this.environmental_quality = environmental_quality;
+    public void setEnvironmentalQuality(float environmentalQuality) {
+        this.environmentalQuality = environmentalQuality;
     }
     public float getEconomy() {
         return economy;
@@ -149,7 +155,38 @@ public class City {
     public void setEconomy(float economy) {
         this.economy = economy;
     }
+    public float getTaxation() {
+        return taxation;
+    }
+    public void setTaxation(float taxation) {
+        this.taxation = taxation;
+    }
+    public float getInternetAccess() {
+        return internetAccess;
+    }
+    public void setInternetAccess(float internetAccess) {
+        this.internetAccess = internetAccess;
+    }
+    public float getLeisureCulture() {
+        return leisureCulture;
+    }
+    public void setLeisureCulture(float leisureCulture) {
+        this.leisureCulture = leisureCulture;
+    }
+    public float getTolerance() {
+        return tolerance;
+    }
+    public void setTolerance(float tolerance) {
+        this.tolerance = tolerance;
+    }
+    public float getOutdoors() {
+        return outdoors;
+    }
+    public void setOutdoors(float outdoors) {
+        this.outdoors = outdoors;
+    }
 
-    
+
+
     
 }

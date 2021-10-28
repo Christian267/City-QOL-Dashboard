@@ -15,21 +15,25 @@ public class CityDataProcessor implements ItemProcessor<CityInput, City> {
     public City process(final CityInput cityInput) throws Exception {
         City city = new City();
         city.setId(Long.parseLong(cityInput.getId()));
-        city.setUa_name(cityInput.getUa_name());
-        city.setUa_country(cityInput.getUa_country());
-        city.setUa_continent(cityInput.getUa_continent());
+        city.setUaName(cityInput.getUaName());
+        city.setUaCountry(cityInput.getUaCountry());
+        city.setUaContinent(cityInput.getUaContinent());
         city.setHousing(Float.parseFloat(cityInput.getHousing()));
-        city.setCost_of_living(Float.parseFloat(cityInput.getCost_of_living()));
+        city.setCostOfLiving(Float.parseFloat(cityInput.getCostOfLiving()));
         city.setStartups(Float.parseFloat(cityInput.getStartups()));
-        city.setVenture_capital(Float.parseFloat(cityInput.getVenture_capital()));
-        city.setTravel_connectivity(Float.parseFloat(cityInput.getTravel_connectivity()));
+        city.setVentureCapital(Float.parseFloat(cityInput.getVentureCapital()));
+        city.setTravelConnectivity(Float.parseFloat(cityInput.getTravelConnectivity()));
         city.setCommute(Float.parseFloat(cityInput.getCommute()));
-        city.setBusiness_freedom(Float.parseFloat(cityInput.getBusiness_freedom()));
+        city.setBusinessFreedom(Float.parseFloat(cityInput.getBusinessFreedom()));
         city.setSafety(Float.parseFloat(cityInput.getSafety()));
         city.setHealthcare(Float.parseFloat(cityInput.getHealthcare()));
         city.setEducation(Float.parseFloat(cityInput.getEducation()));
-        city.setEnvironmental_quality(Float.parseFloat(cityInput.getEnvironmental_quality()));
+        city.setEnvironmentalQuality(Float.parseFloat(cityInput.getEnvironmentalQuality()));
         city.setEconomy(Float.parseFloat(cityInput.getEconomy()));
+        city.setTaxation(Float.parseFloat(cityInput.getTaxation()));
+        city.setInternetAccess(Float.parseFloat(cityInput.getInternetAccess()));
+        city.setTolerance(Float.parseFloat(cityInput.getTolerance()));
+        city.setOutdoors(Float.parseFloat(cityInput.getOutdoors()));
         return city;
     }
   

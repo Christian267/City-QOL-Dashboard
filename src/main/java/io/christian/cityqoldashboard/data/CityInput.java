@@ -3,22 +3,58 @@ package io.christian.cityqoldashboard.data;
 public class CityInput {
 
     private String id;
-    private String ua_name;
-    private String ua_country;
-    private String ua_continent;
+    private String uaName;
+    private String uaCountry;
+    private String uaContinent;
     private String housing;
-    private String cost_of_living;
+    private String costOfLiving;
     private String startups;
-    private String venture_capital;
-    private String travel_connectivity;
+    private String ventureCapital;
+    private String travelConnectivity;
     private String commute;
-    private String business_freedom;
+    private String businessFreedom;
     private String safety;
     private String healthcare;
     private String education;
-    private String environmental_quality;
+    private String environmentalQuality;
     private String economy;
+    private String taxation;
+    private String internetAccess;
+    private String leisureCulture;
+    private String tolerance;
+    private String outdoors;
 
+
+    public CityInput() {
+    }
+
+    public CityInput(String id, String uaName, String uaCountry, String uaContinent, String housing,
+            String costOfLiving, String startups, String ventureCapital, String travelConnectivity, String commute,
+            String businessFreedom, String safety, String healthcare, String education, String environmentalQuality,
+            String economy, String taxation, String internetAccess, String leisureCulture, String tolerance,
+            String outdoors) {
+        this.id = id;
+        this.uaName = uaName;
+        this.uaCountry = uaCountry;
+        this.uaContinent = uaContinent;
+        this.housing = housing;
+        this.costOfLiving = costOfLiving;
+        this.startups = startups;
+        this.ventureCapital = ventureCapital;
+        this.travelConnectivity = travelConnectivity;
+        this.commute = commute;
+        this.businessFreedom = businessFreedom;
+        this.safety = safety;
+        this.healthcare = healthcare;
+        this.education = education;
+        this.environmentalQuality = environmentalQuality;
+        this.economy = economy;
+        this.taxation = taxation;
+        this.internetAccess = internetAccess;
+        this.leisureCulture = leisureCulture;
+        this.tolerance = tolerance;
+        this.outdoors = outdoors;
+    }
 
 
     public String getId() {
@@ -27,23 +63,23 @@ public class CityInput {
     public void setId(String id) {
         this.id = id;
     }
-    public String getUa_name() {
-        return ua_name;
+    public String getUaName() {
+        return uaName;
     }
-    public void setUa_name(String ua_name) {
-        this.ua_name = ua_name;
+    public void setUaName(String uaName) {
+        this.uaName = uaName;
     }
-    public String getUa_country() {
-        return ua_country;
+    public String getUaCountry() {
+        return uaCountry;
     }
-    public void setUa_country(String ua_country) {
-        this.ua_country = ua_country;
+    public void setUaCountry(String uaCountry) {
+        this.uaCountry = uaCountry;
     }
-    public String getUa_continent() {
-        return ua_continent;
+    public String getUaContinent() {
+        return uaContinent;
     }
-    public void setUa_continent(String ua_continent) {
-        this.ua_continent = ua_continent;
+    public void setUaContinent(String uaContinent) {
+        this.uaContinent = uaContinent;
     }
     public String getHousing() {
         return housing;
@@ -51,11 +87,11 @@ public class CityInput {
     public void setHousing(String housing) {
         this.housing = housing;
     }
-    public String getCost_of_living() {
-        return cost_of_living;
+    public String getCostOfLiving() {
+        return costOfLiving;
     }
-    public void setCost_of_living(String cost_of_living) {
-        this.cost_of_living = cost_of_living;
+    public void setCostOfLiving(String costOfLiving) {
+        this.costOfLiving = costOfLiving;
     }
     public String getStartups() {
         return startups;
@@ -63,17 +99,17 @@ public class CityInput {
     public void setStartups(String startups) {
         this.startups = startups;
     }
-    public String getVenture_capital() {
-        return venture_capital;
+    public String getVentureCapital() {
+        return ventureCapital;
     }
-    public void setVenture_capital(String venture_capital) {
-        this.venture_capital = venture_capital;
+    public void setVentureCapital(String ventureCapital) {
+        this.ventureCapital = ventureCapital;
     }
-    public String getTravel_connectivity() {
-        return travel_connectivity;
+    public String getTravelConnectivity() {
+        return travelConnectivity;
     }
-    public void setTravel_connectivity(String travel_connectivity) {
-        this.travel_connectivity = travel_connectivity;
+    public void setTravelConnectivity(String travelConnectivity) {
+        this.travelConnectivity = travelConnectivity;
     }
     public String getCommute() {
         return commute;
@@ -81,11 +117,11 @@ public class CityInput {
     public void setCommute(String commute) {
         this.commute = commute;
     }
-    public String getBusiness_freedom() {
-        return business_freedom;
+    public String getBusinessFreedom() {
+        return businessFreedom;
     }
-    public void setBusiness_freedom(String business_freedom) {
-        this.business_freedom = business_freedom;
+    public void setBusinessFreedom(String businessFreedom) {
+        this.businessFreedom = businessFreedom;
     }
     public String getSafety() {
         return safety;
@@ -105,11 +141,11 @@ public class CityInput {
     public void setEducation(String education) {
         this.education = education;
     }
-    public String getEnvironmental_quality() {
-        return environmental_quality;
+    public String getEnvironmentalQuality() {
+        return environmentalQuality;
     }
-    public void setEnvironmental_quality(String environmental_quality) {
-        this.environmental_quality = environmental_quality;
+    public void setEnvironmentalQuality(String environmentalQuality) {
+        this.environmentalQuality = environmentalQuality;
     }
     public String getEconomy() {
         return economy;
@@ -123,17 +159,17 @@ public class CityInput {
     public void setTaxation(String taxation) {
         this.taxation = taxation;
     }
-    public String getInternet_access() {
-        return internet_access;
+    public String getInternetAccess() {
+        return internetAccess;
     }
-    public void setInternet_access(String internet_access) {
-        this.internet_access = internet_access;
+    public void setInternetAccess(String internetAccess) {
+        this.internetAccess = internetAccess;
     }
-    public String getLeisure_culture() {
-        return leisure_culture;
+    public String getLeisureCulture() {
+        return leisureCulture;
     }
-    public void setLeisure_culture(String leisure_culture) {
-        this.leisure_culture = leisure_culture;
+    public void setLeisureCulture(String leisureCulture) {
+        this.leisureCulture = leisureCulture;
     }
     public String getTolerance() {
         return tolerance;
@@ -147,11 +183,7 @@ public class CityInput {
     public void setOutdoors(String outdoors) {
         this.outdoors = outdoors;
     }
-    private String taxation;
-    private String internet_access;
-    private String leisure_culture;
-    private String tolerance;
-    private String outdoors;
 
 
+    
 }
