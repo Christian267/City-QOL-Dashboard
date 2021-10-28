@@ -1,6 +1,7 @@
 package io.christian.cityqoldashboard.controller;
 
 import java.util.List;
+import java.util.ArrayList;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,9 +21,16 @@ public class CityController {
         this.cityRepository = cityRepository;
     }
 
-    // @GetMapping("/city/{cityName}")
-    // public City getAllCities(@PathVariable String cityName) {
-    //     return this.cityRepository.findByNameIgnoreCase(cityName);
-    // }
+    @GetMapping("/city")
+    public List<City> getAllCities() {
+        List<City> cities = new ArrayList<City>();
+        this.cityRepository.findAll()
+        .forEach(cities::add);   // cities.add(currentItem)
+        return cities;
+    }
 
+    @GetMapping("/city/{cityName}")
+    public List<City> getCity(@PathVariable String cityName ) {
+        return this.cityRepository.findAllByUaNameIgnoreCase(cityName);
+    }
 }
