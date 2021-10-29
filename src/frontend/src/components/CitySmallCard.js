@@ -1,9 +1,9 @@
 import { React } from 'react';
 
-export const CitySmallCard = () => {
+export const CitySmallCard = ({city}) => {
     return (
         <div className="CityPage">
-            <p>City Small Card</p>
+            <p>{city ? city.uaName + ', ' + city.uaCountry : 'Loading...'}</p>
         </div>
     )
 }
