@@ -2,6 +2,7 @@ package io.christian.cityqoldashboard.model;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Transient;
 
 @Entity
 public class City {
@@ -29,6 +30,9 @@ public class City {
     private float tolerance;
     private float outdoors;
 
+    @Transient
+    private float score;
+    
     public City() {
     }
     
@@ -57,6 +61,11 @@ public class City {
         this.leisureCulture = leisureCulture;
         this.tolerance = tolerance;
         this.outdoors = outdoors;
+        this.score = (housing + costOfLiving + startups + ventureCapital + 
+        travelConnectivity + commute + businessFreedom + safety + healthcare + 
+        education + environmentalQuality + economy + taxation + internetAccess + 
+        leisureCulture + tolerance + outdoors) / 17;
+
     }
 
     public long getId() {
@@ -184,6 +193,19 @@ public class City {
     }
     public void setOutdoors(float outdoors) {
         this.outdoors = outdoors;
+    }
+
+    public float getScore() {
+        float sum = (this.housing + this.costOfLiving + this.startups + this.ventureCapital + this.
+        travelConnectivity + this.commute + this.businessFreedom + this.safety + this.healthcare + this.
+        education + this.environmentalQuality + this.economy + this.taxation + this.internetAccess + this.
+        leisureCulture + this.tolerance + this.outdoors) / 17;
+        setScore(sum);
+        return score;
+    }
+
+    public void setScore(float score) {
+        this.score = score;
     }
 
 
