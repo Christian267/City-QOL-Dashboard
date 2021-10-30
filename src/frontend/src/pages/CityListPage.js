@@ -3,30 +3,30 @@ import { CityDetailCard } from '../components/CityDetailCard';
 import { CitySmallCard } from '../components/CitySmallCard';
 
 
-export const CityPage = () => {
+export const CityListPage = () => {
 
     // const defaultCity = {
     //     'city': 'amsterdam',
     //     'country': 'netherlands'
     // };
     const defaultPreferences = {
-        businessFreedom: 1.0,
-        commute: 1.0,
-        costOfLiving: 1.0,
-        economy: 1.0,
-        education: 1.0,
-        environmentalQuality: 1.0,
-        healthcare: 1.0,
-        housing: 1.0,
-        internetAccess: 1.0,
-        leisureCulture: 1.0,
-        outdoors: 1.0,
-        safety: 1.0,
-        startups: 1.0,
-        taxation: 1.0,
-        tolerance: 1.0,
-        travelConnectivity: 1.0,
-        ventureCapital: 1.0
+        businessFreedom: 0.5,
+        commute: 0.5,
+        costOfLiving: 0.5,
+        economy: 0.5,
+        education: 0.5,
+        environmentalQuality: 0.5,
+        healthcare: 0.5,
+        housing: 0.5,
+        internetAccess: 0.5,
+        leisureCulture: 0.5,
+        outdoors: 0.5,
+        safety: 0.5,
+        startups: 0.5,
+        taxation: 0.5,
+        tolerance: 0.5,
+        travelConnectivity: 0.5,
+        ventureCapital: 0.5
     };
 
     // const [cities, setCities] = useState([{}]);
@@ -34,35 +34,36 @@ export const CityPage = () => {
     // const [cityName, setCityName] = useState(defaultCity);
     const [preferredCities, setPreferredCities] = useState([{}]);
     const [cityLoadError, setCityLoadError] = useState();
-    const [count, setCount] = useState(0);
 
-    const fetchCities = async () => {
-        try {
-            const response = await fetch(`http://localhost:8080/city/`);
-            const data = await response.json();
-            // setCities(data);
-            data.sort((a, b) => a.score < b.score ? 1 : -1);
-            setPreferredCities(data);
-            console.log(data);
-        } catch(err) {
-            setCityLoadError(err);
-        }
-    };
-
+    
+    useEffect(() =>  {
+        const fetchCities = async () => {
+            try {
+                const response = await fetch(`http://localhost:8080/city/`);
+                const data = await response.json();
+                // setCities(data);
+                data.sort((a, b) => a.score < b.score ? 1 : -1);
+                setPreferredCities(data);
+                console.log(data);
+            } catch(err) {
+                setCityLoadError(err);
+            }
+        };
+        fetchCities();
+    }, []
+    );
 
     const updatePreference = (preference, direction) => {
-        const newPreferences = preferences;
-        newPreferences[preference] = direction === 'increment' ?
-                    newPreferences[preference] + 0.05 : 
-                    newPreferences[preference] - 0.05;
-        setPreferences(newPreferences);
+        const val = direction === 'increment' ?
+                preferences[preference] + 0.05:
+                preference[preference] - 0.05;
+        setPreferences({...preferences, [preference]: val});
         updateCityScores();
-        setCount(count + 1);
     };
-
+    
     const updateCityScores = () => {
         const newPreferredCities = preferredCities;
-        // console.log(newPreferredCities[0]['score']);
+        console.log(newPreferredCities[0].uaName);
         for (let i=0; i < newPreferredCities.length; i++) {
             var newScore = 0;
             for (const key of Object.keys(preferences)) {
@@ -81,18 +82,11 @@ export const CityPage = () => {
         }
         newPreferredCities.sort((a, b) => a.score > b.score ? -1 : 1);
         setPreferredCities(newPreferredCities);
-    }
-
-    useEffect(
-        () =>  {
-        fetchCities();
-        }, []
-    );
-    
+    };
     
     if (preferredCities.length === 1) {
         return (
-            <div className="CityPage">
+            <div className="CityListPage">
                 <h1>{ cityLoadError ? 'Could not load city data' : 'Loading...'}</h1>            
                 <p>{JSON.stringify(preferences)}</p>
                 {/* {Array(13).fill(Object.keys(preferences).map(pref => <button onclick={setPreference}>pref</button>))} */}
@@ -101,17 +95,17 @@ export const CityPage = () => {
             </div>
         );
     }
-
+    
     return (
-        <div className="CityPage">
+        <div className="CityListPage">
             <h1>Your City Preferences</h1>
             {/* <h1>Count: {count}</h1> */}
             <p>{JSON.stringify(preferences)}</p>
             {Array(1).fill(Object.keys(preferences)
-            .map(pref => <button key={pref} onClick={() => updatePreference(pref, 'increment')}>{pref}++</button>))}
+                .map(pref => <button key={pref} onClick={() => updatePreference(pref, 'increment')}>{pref}++</button>))}
             <br/>
             {Array(1).fill(Object.keys(preferences)
-            .map(pref => <button key={pref} onClick={() => updatePreference(pref, 'decrement')}>{pref} - -</button>))}
+                .map(pref => <button key={pref} onClick={() => updatePreference(pref, 'decrement')}>{pref} - -</button>))}
             <CityDetailCard city={preferredCities[0]}/>
             {preferredCities.slice(1, 4).map(city => <CitySmallCard key={city.uaName} city={city} />)}
         </div>
