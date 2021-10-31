@@ -1,3 +1,28 @@
+.city-list-page {
+    width: 80%;
+    margin: 0 auto 0 auto;
+}
+
+.modal-button {
+    display: inline-block;
+    padding: 0.3em 1em;
+    text-decoration: none;
+    color: #003455;
+    background: rgb(239, 240, 241);
+    border: solid 2px #003455;
+    border-radius: 3px;
+    transition: 0.3s;
+    cursor: pointer;
+}
+
+/* #003455 */
+.modal-button:hover {
+    background: #003455;
+    color: white;
+    transition: 0.15s;
+    /* filter: brightness(1.03); */
+}
+
 .modal {
   display: none;
   position: fixed;
@@ -64,4 +89,31 @@
   padding: 2px 16px;
   background-color: #01003a;
   color: rgb(238, 238, 238);
+}
+
+.show-container{
+    width: 250px;
+    position:relative;
+}
+
+.show-more {
+    width: 200px;
+    color: #0645AD;
+    cursor: pointer;
+}
+
+.show-more:hover {
+    text-decoration: underline;
+}
+
+.show-less {
+    color: #0645AD;
+    position: absolute;
+    right: 0;
+    align-self: right;
+    cursor: pointer;
+}
+
+.show-less:hover {
+    text-decoration: underline;
 }

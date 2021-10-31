@@ -1,0 +1,26 @@
+[] Build Landing Page (/home)
+    [] Create sliders
+        [X] Connect sliders to state of page
+        [] Tooltip explaining each preference slider
+    [] Pass preference data to /cityList
+        https://stackoverflow.com/questions/42173786/react-router-pass-data-when-navigating-programmatically
+    [] Styles
+[] Build City List Page (/cityList)
+    [X] Incorporate sliders to readjust preferences
+    [X] Dynamically display top city based on preference * city scores
+        [X] Display top preference categories
+    [] Display next 4 cities
+        [] expandable/collapsible detail
+        [] List to their own page (/city/<cityName>/country/<countryName>)
+    [] Button for expanding the number of cities displayed (+collapse button)
+    [] Make modal close on click outside https://stackoverflow.com/questions/32553158/detect-click-outside-react-component
+    [] Styles
+[] Build /city page
+    [] Give it basic structure
+        [] name
+        [] details
+        [] compare function
+        [] image
+    [] Make it reachable from /cityList
+        [] create link on /cityList 
+    [] Styles 

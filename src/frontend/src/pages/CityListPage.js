@@ -29,10 +29,11 @@ export const CityListPage = () => {
         travelConnectivity: 0.5,
         ventureCapital: 0.5
     };
-
+    const minDisplayCount = 6;
     const [preferences, setPreferences] = useState(defaultPreferences);
     const [preferredCities, setPreferredCities] = useState([{}]);
     const [cityLoadError, setCityLoadError] = useState();
+    const [displayCount, setDisplayCount] = useState(minDisplayCount);
 
     const modalRef = useRef();;
 
@@ -60,6 +61,24 @@ export const CityListPage = () => {
         fetchCities();
     }, []
     );
+
+    const changeDisplayCount = useCallback((increment) => {
+        const maxCount = preferredCities.length;
+        const step = 10;
+        if (increment && displayCount < maxCount - step) {
+            setDisplayCount(displayCount + step);
+        }
+        else if (increment && displayCount > maxCount - step && displayCount < maxCount) {
+            setDisplayCount(267);
+        }
+        else if (!increment && displayCount > minDisplayCount + step) {
+            setDisplayCount(displayCount - step);
+        }
+        else {
+            setDisplayCount(minDisplayCount);
+        }
+    },
+    [displayCount, preferredCities.length]);
 
     const onChangeSlider = useCallback((e, pref) => {
         // newPref[pref]  = parseFloat(e.target.value);
@@ -120,22 +139,20 @@ export const CityListPage = () => {
 
     if (preferredCities.length === 1) {
         return (
-            <div className="CityListPage">
+            <div className="city-list-page">
                 <h1>{cityLoadError ? 'Could not load city data' : 'Loading...'}</h1>
-                <p>{JSON.stringify(preferences)}</p>
                 {/* {Array(13).fill(Object.keys(preferences).map(pref => <button onclick={setPreference}>pref</button>))} */}
                 <CityDetailCard key="null-card" city={null} />
-                {[1, 2, 3].map(v => <CitySmallCard key={v} />)}
+                {[1, 2, 3].map(v => <CitySmallCard key={v} city={null}/>)}
             </div>
         );
     }
 
-
     return (
-        <div className="CityListPage">
+        <div className="city-list-page">
             <h1>Your City Preferences</h1>
-            <button id="myBtn" onClick={openModal}>Open Modal</button>
-            <div ref={modalRef} id="myModal" className="modal">
+            <h4 className="modal-button" onClick={openModal}>Adjust your preferences</h4>
+            <div ref={modalRef} className="modal">
                 <div className="modal-content">
                     <div className="modal-header">
                         <span className="close" onClick={closeModal}>&times;</span>
@@ -143,7 +160,14 @@ export const CityListPage = () => {
                     </div>
                     <div className="modal-body grid">
                         {Array(1).fill(Object.keys(defaultPreferences)
-                        .map(pref => <PreferenceSlider key={pref + '-slider'} value={preferences[pref]} name={pref} {...sliderProps} />))}
+                        .map(pref => <PreferenceSlider 
+                                        key={pref + '-slider'} 
+                                        value={preferences[pref]} 
+                                        name={pref} {...sliderProps} 
+                                    />
+                                )
+                            )
+                        }
                     </div>
                     <div className="modal-footer">
                         <h3>Filter By:</h3>
@@ -152,7 +176,30 @@ export const CityListPage = () => {
 
             </div>
             <CityDetailCard key="active-card" {...detailCardProps} />
-            {preferredCities.slice(1, 4).map(city => <CitySmallCard key={city.uaName} city={city} />)}
+            {preferredCities.slice(1, displayCount)
+            .map(city => <CitySmallCard 
+                            key={city.uaName + city.uaCountry} 
+                            city={city}
+                            index={preferredCities.indexOf(city) + 1} 
+                        />
+                )
+            }
+            <div className='show-container'>
+                <span 
+                    className="show-more" 
+                    onClick={() => changeDisplayCount(true)} 
+                    style={{display: displayCount===preferredCities.length ? 'none' : 'inline'}}
+                    >
+                    show more
+                </span>
+                <span 
+                    className="show-less" 
+                    onClick={() => changeDisplayCount(false)} 
+                    style={{display: displayCount===minDisplayCount ? 'none' : 'inline'}}
+                    >
+                    show less
+                </span>
+            </div>
         </div>
     );
 }
