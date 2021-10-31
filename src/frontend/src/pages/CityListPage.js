@@ -1,4 +1,4 @@
-import { React, useEffect, useState } from 'react';
+import { React, useEffect, useState, useMemo } from 'react';
 import { CityDetailCard } from '../components/CityDetailCard';
 import { CitySmallCard } from '../components/CitySmallCard';
 
@@ -56,7 +56,7 @@ export const CityListPage = () => {
     const updatePreference = (preference, direction) => {
         const val = direction === 'increment' ?
                 preferences[preference] + 0.05:
-                preference[preference] - 0.05;
+                preferences[preference] - 0.05;
         setPreferences({...preferences, [preference]: val});
         updateCityScores();
     };
@@ -84,6 +84,13 @@ export const CityListPage = () => {
         setPreferredCities(newPreferredCities);
     };
     
+    const detailCardProps = useMemo(
+        () => ({
+            topPreferences: [preferences['businessFreedom']]
+        }),
+        [preferences]
+    )
+
     if (preferredCities.length === 1) {
         return (
             <div className="CityListPage">
@@ -96,6 +103,7 @@ export const CityListPage = () => {
         );
     }
     
+
     return (
         <div className="CityListPage">
             <h1>Your City Preferences</h1>

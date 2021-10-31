@@ -44,10 +44,6 @@ export const PreferenceSlider = ({value,
     const preferenceRef = useRef();
     const valueRef = useRef();
 
-
-
-
-
     useEffect(() => {
         const rangeLinearGradient= (val) => {
             const newBackgroundStyle = `linear-gradient(90deg, ${linearGradientColor} 0% ${val*100 + '%'}, ${rangeBackgroundColor} ${val*100 + '%'} 100%)`;
@@ -69,7 +65,7 @@ export const PreferenceSlider = ({value,
     
         <div className="slider-container">
             <h4 className="preference-text">{separateCamelCaseWord(name)}
-                <span class="tooltip-text">TOOLTIP TEXT</span>
+                <span className="tooltip-text">TOOLTIP TEXT</span>
             </h4>
             <input 
                 ref={preferenceRef}

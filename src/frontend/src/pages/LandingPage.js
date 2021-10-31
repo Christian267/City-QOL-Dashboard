@@ -1,4 +1,4 @@
-import { React, useState, useMemo} from 'react';
+import { React, useState, useMemo, useCallback} from 'react';
 import { PreferenceSlider } from '../components/PreferenceSlider';
 import './LandingPage.css';
 export const LandingPage = () => {
@@ -32,10 +32,11 @@ export const LandingPage = () => {
     //     setPreferenceValues(newPreferences);
     // });
 
-    const onChangeSlider = (e, pref) => {
+    const onChangeSlider = useCallback((e, pref) => {
         // newPref[pref]  = parseFloat(e.target.value);
         setPreferenceValues({...preferenceValues, [pref]: parseFloat(e.target.value)});
-    }
+    },
+    [preferenceValues]);
 
     const sliderProps = useMemo(
         () => ({
@@ -47,7 +48,7 @@ export const LandingPage = () => {
             sliderThumbColor: "#2c3e50",
             onChange: (e, pref) => onChangeSlider(e, pref),
         }),
-        [preferenceValues]
+        [onChangeSlider]
     );
 
     return (
@@ -56,7 +57,7 @@ export const LandingPage = () => {
             <h6>{JSON.stringify(preferenceValues)}</h6>
             <div className="grid">
                 {Array(1).fill(Object.keys(defaultPreferences)
-                .map(pref => <PreferenceSlider value={preferenceValues[pref]} name={pref} {...sliderProps} />))}
+                .map(pref => <PreferenceSlider key={pref + '-slider'} value={preferenceValues[pref]} name={pref} {...sliderProps} />))}
             </div>
         </div>
     )
