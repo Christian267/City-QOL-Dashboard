@@ -1,15 +1,30 @@
 import { React } from 'react';
+import { separateCamelCaseWord } from '../helperFunctions/helper';
 
-export const CityDetailCard = ({city}) => {
+export const CityDetailCard = ({city, topPreferences}) => {
 
-
+    if (city === null) {
+        return (
+            <div className="city-detail-card">
+                <h3>Your Top City</h3>
+                <p></p>
+                <h4>Loading...</h4>
+            </div>
+            )
+    }
+    
     return (
-        <div className="CityPage">
+        <div className="city-detail-card">
             <h3>Your Top City</h3>
             <h4>{city ? city.uaName + ', ' + city.uaCountry + ', Score = ' + Math.round(city.score*100)/100 : 'Loading...'}</h4>
-            <h5>Business Freedom {city ? city['businessFreedom'] : 'loading...'}</h5>
-            <h5>Education {city ? city['education'] : 'loading...'}</h5>
-            <h5>Housing {city ? city['housing'] : 'loading...'}</h5>
+            {topPreferences
+            .map(element => 
+            <h5 key={element['pref']}>{separateCamelCaseWord(element['pref']) + ': '} {Math.round(city[element['pref']]*100)/100}</h5>
+            )}
+
+            {/* <h5>Business Freedom {city ? Math.round(city['businessFreedom']*100)/100 : 'loading...'}</h5>
+            <h5>Education {city ? Math.round(city['education']*100)/100 : 'loading...'}</h5>
+            <h5>Housing {city ? Math.round(city['housing']*100)/100 : 'loading...'}</h5> */}
             <br/>
         </div>
     )

@@ -1,7 +1,8 @@
-import { React, useEffect, useState, useMemo } from 'react';
+import { React, useEffect, useState, useMemo, useCallback, useRef } from 'react';
 import { CityDetailCard } from '../components/CityDetailCard';
 import { CitySmallCard } from '../components/CitySmallCard';
-
+import { PreferenceSlider } from '../components/PreferenceSlider';
+import './CityListPage.css';
 
 export const CityListPage = () => {
 
@@ -29,14 +30,21 @@ export const CityListPage = () => {
         ventureCapital: 0.5
     };
 
-    // const [cities, setCities] = useState([{}]);
     const [preferences, setPreferences] = useState(defaultPreferences);
-    // const [cityName, setCityName] = useState(defaultCity);
     const [preferredCities, setPreferredCities] = useState([{}]);
     const [cityLoadError, setCityLoadError] = useState();
 
-    
-    useEffect(() =>  {
+    const modalRef = useRef();;
+
+    const openModal = () => {
+        modalRef.current.style.display = 'block'; 
+    };
+
+    const closeModal = () => {
+        modalRef.current.style.display = 'none';
+    }
+
+    useEffect(() => {
         const fetchCities = async () => {
             try {
                 const response = await fetch(`http://localhost:8080/city/`);
@@ -45,7 +53,7 @@ export const CityListPage = () => {
                 data.sort((a, b) => a.score < b.score ? 1 : -1);
                 setPreferredCities(data);
                 console.log(data);
-            } catch(err) {
+            } catch (err) {
                 setCityLoadError(err);
             }
         };
@@ -53,68 +61,97 @@ export const CityListPage = () => {
     }, []
     );
 
-    const updatePreference = (preference, direction) => {
-        const val = direction === 'increment' ?
-                preferences[preference] + 0.05:
-                preferences[preference] - 0.05;
-        setPreferences({...preferences, [preference]: val});
+    const onChangeSlider = useCallback((e, pref) => {
+        // newPref[pref]  = parseFloat(e.target.value);
+        setPreferences({ ...preferences, [pref]: parseFloat(e.target.value) });
+        const updateCityScores = () => {
+            const newPreferredCities = preferredCities;
+            for (let i = 0; i < newPreferredCities.length; i++) {
+                var newScore = 0;
+                for (const key of Object.keys(preferences)) {
+                    newScore += newPreferredCities[i][key] * preferences[key];
+                }
+                try {
+                    newPreferredCities[i]['score'] = newScore / 17;
+                } catch (err) {
+                    console.log("Key error, city has no property 'score'");
+                }
+            }
+            newPreferredCities.sort((a, b) => a.score > b.score ? -1 : 1);
+            setPreferredCities(newPreferredCities);
+        };
         updateCityScores();
-    };
-    
-    const updateCityScores = () => {
-        const newPreferredCities = preferredCities;
-        console.log(newPreferredCities[0].uaName);
-        for (let i=0; i < newPreferredCities.length; i++) {
-            var newScore = 0;
-            for (const key of Object.keys(preferences)) {
-                // console.log(key);
-                // console.log(newPreferredCities[i][key])
-                newScore += newPreferredCities[i][key] * preferences[key];
-            }
-            // console.log(city);
-            // console.log('Score: ' + newScore);
-            try {
-                newPreferredCities[i]['score'] = newScore / 17;
-                // console.log(city['score']);
-            } catch(err) {
-                console.log("Key error, city has no property 'score'");
-            }
+    },
+        [preferences, preferredCities]);
+
+
+
+    const topThreePreferences = useCallback(() => {
+        var sorted = Object.keys(preferences);
+        sorted = sorted.sort((a, b) => preferences[a] > preferences[b] ? -1 : 1).slice(0, 3);
+        const newSorted = [];
+        for (let pref of sorted) {
+            newSorted.push({ pref: pref });
         }
-        newPreferredCities.sort((a, b) => a.score > b.score ? -1 : 1);
-        setPreferredCities(newPreferredCities);
-    };
-    
+        return newSorted;
+    },
+        [preferences]);
+
+    const sliderProps = useMemo(
+        () => ({
+            step: 0.01,
+            min: 0,
+            max: 1,
+            linearGradientColor: "#2c3e50",
+            rangeBackgroundColor: "#d7dcdf",
+            sliderThumbColor: "#2c3e50",
+            onChange: (e, pref) => onChangeSlider(e, pref),
+        }),
+        [onChangeSlider]
+    );
+
     const detailCardProps = useMemo(
         () => ({
-            topPreferences: [preferences['businessFreedom']]
+            city: preferredCities[0],
+            topPreferences: topThreePreferences()
         }),
-        [preferences]
+        [preferredCities, topThreePreferences]
     )
 
     if (preferredCities.length === 1) {
         return (
             <div className="CityListPage">
-                <h1>{ cityLoadError ? 'Could not load city data' : 'Loading...'}</h1>            
+                <h1>{cityLoadError ? 'Could not load city data' : 'Loading...'}</h1>
                 <p>{JSON.stringify(preferences)}</p>
                 {/* {Array(13).fill(Object.keys(preferences).map(pref => <button onclick={setPreference}>pref</button>))} */}
-                <CityDetailCard />
-                {Array(1).fill([1,2,3]).map(v => <CitySmallCard key={v}/>)}
+                <CityDetailCard key="null-card" city={null} />
+                {[1, 2, 3].map(v => <CitySmallCard key={v} />)}
             </div>
         );
     }
-    
+
 
     return (
         <div className="CityListPage">
             <h1>Your City Preferences</h1>
-            {/* <h1>Count: {count}</h1> */}
-            <p>{JSON.stringify(preferences)}</p>
-            {Array(1).fill(Object.keys(preferences)
-                .map(pref => <button key={pref} onClick={() => updatePreference(pref, 'increment')}>{pref}++</button>))}
-            <br/>
-            {Array(1).fill(Object.keys(preferences)
-                .map(pref => <button key={pref} onClick={() => updatePreference(pref, 'decrement')}>{pref} - -</button>))}
-            <CityDetailCard city={preferredCities[0]}/>
+            <button id="myBtn" onClick={openModal}>Open Modal</button>
+            <div ref={modalRef} id="myModal" className="modal">
+                <div className="modal-content">
+                    <div className="modal-header">
+                        <span className="close" onClick={closeModal}>&times;</span>
+                        <h2>Adjust Your Preferences</h2>
+                    </div>
+                    <div className="modal-body grid">
+                        {Array(1).fill(Object.keys(defaultPreferences)
+                        .map(pref => <PreferenceSlider key={pref + '-slider'} value={preferences[pref]} name={pref} {...sliderProps} />))}
+                    </div>
+                    <div className="modal-footer">
+                        <h3>Filter By:</h3>
+                    </div>
+                </div>
+
+            </div>
+            <CityDetailCard key="active-card" {...detailCardProps} />
             {preferredCities.slice(1, 4).map(city => <CitySmallCard key={city.uaName} city={city} />)}
         </div>
     );

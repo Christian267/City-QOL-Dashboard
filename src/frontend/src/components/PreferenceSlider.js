@@ -1,5 +1,6 @@
 import { React, useEffect, useRef } from 'react';
 import { createUseStyles } from 'react-jss';
+import { separateCamelCaseWord } from '../helperFunctions/helper';
 import './PreferenceSlider.css';
 
 export const PreferenceSlider = ({value, 
@@ -28,17 +29,6 @@ export const PreferenceSlider = ({value,
         }
     });
 
-    const separateCamelCaseWord = (word) => {
-        var newWords = '';
-        for (let ch of word) {
-            if (ch === ch.toUpperCase()) {
-                newWords += ' ';
-            }
-            newWords += ch;
-        }
-        newWords[0].toUpperCase();
-        return newWords[0].toUpperCase() + newWords.substring(1);
-    }
 
     const classes = useStyles();
     const preferenceRef = useRef();
@@ -60,6 +50,11 @@ export const PreferenceSlider = ({value,
         onChange(e, name);
     }
 
+    const handleScrollChange = e => {
+        console.log("Scrolled");
+        e.target.value += 0.01;
+        onChange(e, name);
+    }
     return (
 
     
@@ -75,6 +70,7 @@ export const PreferenceSlider = ({value,
                 value={value} 
                 step={step} 
                 onChange={(e) => handleChange(e)} 
+                onScroll={(e) => handleScrollChange(e)}
             />
             <span ref={valueRef} className={`preference-slider-value ${classes.preferenceSliderValue}`}>{value}</span>
             <div className="range-min-max-values">
