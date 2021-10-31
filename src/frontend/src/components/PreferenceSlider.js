@@ -68,7 +68,9 @@ export const PreferenceSlider = ({value,
 
     
         <div className="slider-container">
-            <h4>{separateCamelCaseWord(name)}</h4>
+            <h4 className="preference-text">{separateCamelCaseWord(name)}
+                <span class="tooltip-text">TOOLTIP TEXT</span>
+            </h4>
             <input 
                 ref={preferenceRef}
                 className={`preference-slider ${classes.preferenceSlider}`} 

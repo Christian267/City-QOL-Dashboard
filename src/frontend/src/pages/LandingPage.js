@@ -1,6 +1,6 @@
 import { React, useState, useMemo} from 'react';
 import { PreferenceSlider } from '../components/PreferenceSlider';
-import './CityListPage.css';
+import './LandingPage.css';
 export const LandingPage = () => {
 
     
@@ -51,10 +51,10 @@ export const LandingPage = () => {
     );
 
     return (
-        <div>
-            <h2>Landing Page</h2>
-            <p>{JSON.stringify(preferenceValues)}</p>
-            <div className="multi-slider-container">
+        <div className="landing-page">
+            <h2>Adjust your preferences on what you care about in a city</h2>
+            <h6>{JSON.stringify(preferenceValues)}</h6>
+            <div className="grid">
                 {Array(1).fill(Object.keys(defaultPreferences)
                 .map(pref => <PreferenceSlider value={preferenceValues[pref]} name={pref} {...sliderProps} />))}
             </div>

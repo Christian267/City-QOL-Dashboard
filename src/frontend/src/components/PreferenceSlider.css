@@ -1,18 +1,48 @@
 .slider-container {
-    width: 120px;
+    width: 100px;
     height: 160px;
+    margin: 10px 0 0 0;
     grid-auto-columns: 1;
     grid-auto-rows: 1;
     align-items: center;
     /* background-color: pink; */
-    overflow: wrap;
+    /* overflow: wrap; */
     text-align: center;
 }
 
-.slider-container h4 {
+.preference-text {
     margin: 0px 0 50px 0;
-    overflow: wrap;
+    min-height: 40px;
+    max-width: 100px;
+    /* background-color: pink; */
+    align-self: center;
+    cursor: help;
+    /* overflow: wrap; */
     /* background-color: green; */
+}
+
+.preference-text .tooltip-text {
+    /* visibility: hidden; */
+    width: 120px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    padding: 5px 0;
+    border-radius: 6px;
+    position:absolute;
+    z-index: 1;
+    top: 100px;
+    margin-left: -60px;
+    opacity: 0;
+    transition: opacity 0.15s;
+    transition-delay: 0s;
+    transition-timing-function: ease-out;
+}
+
+.preference-text:hover .tooltip-text {
+    /* visibility: visible; */
+    opacity: 1;
+    transition-delay: 500ms;
 }
 
 .preference-slider {
