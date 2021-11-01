@@ -6,10 +6,6 @@ import './CityListPage.css';
 
 export const CityListPage = () => {
 
-    // const defaultCity = {
-    //     'city': 'amsterdam',
-    //     'country': 'netherlands'
-    // };
     const defaultPreferences = {
         businessFreedom: 0.5,
         commute: 0.5,
@@ -50,10 +46,9 @@ export const CityListPage = () => {
             try {
                 const response = await fetch(`http://localhost:8080/city/`);
                 const data = await response.json();
-                // setCities(data);
                 data.sort((a, b) => a.score < b.score ? 1 : -1);
-                setPreferredCities(data);
                 console.log(data);
+                setPreferredCities(data);
             } catch (err) {
                 setCityLoadError(err);
             }
@@ -65,23 +60,22 @@ export const CityListPage = () => {
     const changeDisplayCount = useCallback((increment) => {
         const maxCount = preferredCities.length;
         const step = 10;
-        if (increment && displayCount < maxCount - step) {
+        if (increment && displayCount <= maxCount - step) {
             setDisplayCount(displayCount + step);
         }
-        else if (increment && displayCount > maxCount - step && displayCount < maxCount) {
-            setDisplayCount(267);
+        else if (increment && displayCount < maxCount) {
+            setDisplayCount(maxCount);
         }
-        else if (!increment && displayCount > minDisplayCount + step) {
+        else if (!increment && displayCount >= minDisplayCount + step) {
             setDisplayCount(displayCount - step);
         }
-        else {
+        else if(!increment && displayCount > minDisplayCount) {
             setDisplayCount(minDisplayCount);
         }
     },
     [displayCount, preferredCities.length]);
 
     const onChangeSlider = useCallback((e, pref) => {
-        // newPref[pref]  = parseFloat(e.target.value);
         setPreferences({ ...preferences, [pref]: parseFloat(e.target.value) });
         const updateCityScores = () => {
             const newPreferredCities = preferredCities;
@@ -121,9 +115,9 @@ export const CityListPage = () => {
             step: 0.01,
             min: 0,
             max: 1,
-            linearGradientColor: "#2c3e50",
+            linearGradientColor: "#073857",
             rangeBackgroundColor: "#d7dcdf",
-            sliderThumbColor: "#2c3e50",
+            sliderThumbColor: "#073857",
             onChange: (e, pref) => onChangeSlider(e, pref),
         }),
         [onChangeSlider]
@@ -150,55 +144,58 @@ export const CityListPage = () => {
 
     return (
         <div className="city-list-page">
-            <h1>Your City Preferences</h1>
-            <h4 className="modal-button" onClick={openModal}>Adjust your preferences</h4>
-            <div ref={modalRef} className="modal">
-                <div className="modal-content">
-                    <div className="modal-header">
-                        <span className="close" onClick={closeModal}>&times;</span>
-                        <h2>Adjust Your Preferences</h2>
-                    </div>
-                    <div className="modal-body grid">
-                        {Array(1).fill(Object.keys(defaultPreferences)
-                        .map(pref => <PreferenceSlider 
-                                        key={pref + '-slider'} 
-                                        value={preferences[pref]} 
-                                        name={pref} {...sliderProps} 
-                                    />
+            <div className="card-grid">
+                <h1>Cities Ranked on Preference</h1>
+                <h4 className="modal-button" onClick={openModal}>Adjust your preferences</h4>
+                <div ref={modalRef} className="modal">
+                    <div className="modal-content">
+                        <div className="modal-header">
+                            <span className="close" onClick={closeModal}>&times;</span>
+                            <h2>Adjust Your Preferences</h2>
+                        </div>
+                        <div className="modal-body">
+                            {Array(1).fill(Object.keys(defaultPreferences)
+                            .map(pref => <PreferenceSlider 
+                                            key={pref + '-slider'} 
+                                            value={preferences[pref]} 
+                                            name={pref} 
+                                            {...sliderProps} 
+                                        />
+                                    )
                                 )
-                            )
-                        }
+                            }
+                        </div>
+                        <div className="modal-footer">
+                            <h3>Filter By:</h3>
+                        </div>
                     </div>
-                    <div className="modal-footer">
-                        <h3>Filter By:</h3>
-                    </div>
-                </div>
 
-            </div>
-            <CityDetailCard key="active-card" {...detailCardProps} />
-            {preferredCities.slice(1, displayCount)
-            .map(city => <CitySmallCard 
-                            key={city.uaName + city.uaCountry} 
-                            city={city}
-                            index={preferredCities.indexOf(city) + 1} 
-                        />
-                )
-            }
-            <div className='show-container'>
-                <span 
-                    className="show-more" 
-                    onClick={() => changeDisplayCount(true)} 
-                    style={{display: displayCount===preferredCities.length ? 'none' : 'inline'}}
-                    >
-                    show more
-                </span>
-                <span 
-                    className="show-less" 
-                    onClick={() => changeDisplayCount(false)} 
-                    style={{display: displayCount===minDisplayCount ? 'none' : 'inline'}}
-                    >
-                    show less
-                </span>
+                </div>
+                <CityDetailCard key="active-card" {...detailCardProps} />
+                {preferredCities.slice(1, displayCount)
+                .map(city => <CitySmallCard 
+                                key={city.uaName + city.uaCountry} 
+                                city={city}
+                                index={preferredCities.indexOf(city) + 1} 
+                            />
+                    )
+                }
+                <div className='show-container'>
+                    <span 
+                        className="show-more" 
+                        onClick={() => changeDisplayCount(true)} 
+                        style={{display: displayCount===preferredCities.length ? 'none' : 'inline'}}
+                        >
+                        show more
+                    </span>
+                    <span 
+                        className="show-less" 
+                        onClick={() => changeDisplayCount(false)} 
+                        style={{display: displayCount===minDisplayCount ? 'none' : 'inline'}}
+                        >
+                        show less
+                    </span>
+                </div>
             </div>
         </div>
     );

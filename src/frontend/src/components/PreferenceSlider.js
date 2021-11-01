@@ -1,4 +1,4 @@
-import { React, useEffect, useRef } from 'react';
+import { React, useEffect, useRef, useCallback } from 'react';
 import { createUseStyles } from 'react-jss';
 import { separateCamelCaseWord } from '../helperFunctions/helper';
 import './PreferenceSlider.css';
@@ -34,31 +34,38 @@ export const PreferenceSlider = ({value,
     const preferenceRef = useRef();
     const valueRef = useRef();
 
+    const handleScrollChange = e => {
+        console.log("Scrolled");
+        console.log(e);
+        e.target.value += 0.01;
+        onChange(e, name);
+    };
+
     useEffect(() => {
         const rangeLinearGradient= (val) => {
             const newBackgroundStyle = `linear-gradient(90deg, ${linearGradientColor} 0% ${val*100 + '%'}, ${rangeBackgroundColor} ${val*100 + '%'} 100%)`;
             preferenceRef.current.style.background = newBackgroundStyle;
         }
         const valueSpanPosition = (val) => {
-            valueRef.current.style.top = `${30 - val * 100}px`;
+            valueRef.current.style.top = `${15 - val * 78}px`;
         }
         rangeLinearGradient(value);
         valueSpanPosition(value);
+        // window.addEventListener('scroll', handleScrollChange);
+        // return () => {
+        //     window.removeEventListener('scroll', handleScrollChange);
+        // }
     }, [value, linearGradientColor, rangeBackgroundColor])
 
     const handleChange = e => {
         onChange(e, name);
     }
 
-    const handleScrollChange = e => {
-        console.log("Scrolled");
-        e.target.value += 0.01;
-        onChange(e, name);
-    }
+
     return (
 
     
-        <div className="slider-container">
+        <div className="slider-container" onScroll={handleScrollChange}>
             <h4 className="preference-text">{separateCamelCaseWord(name)}
                 <span className="tooltip-text">TOOLTIP TEXT</span>
             </h4>
@@ -69,8 +76,8 @@ export const PreferenceSlider = ({value,
                 min={min} max={max} 
                 value={value} 
                 step={step} 
-                onChange={(e) => handleChange(e)} 
-                onScroll={(e) => handleScrollChange(e)}
+                onChange={handleChange} 
+                
             />
             <span ref={valueRef} className={`preference-slider-value ${classes.preferenceSliderValue}`}>{value}</span>
             <div className="range-min-max-values">

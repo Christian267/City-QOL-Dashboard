@@ -25,15 +25,7 @@ export const LandingPage = () => {
     };
     const [preferenceValues, setPreferenceValues] = useState(defaultPreferences);
 
-    // const sliderValueChanged = useCallback(val => {
-    //     console.log("NEW VALUE", val[0] + ",", val[1]);
-    //     const newPreferences = preferenceValues;
-    //     newPreferences[val[0]] = val[1];
-    //     setPreferenceValues(newPreferences);
-    // });
-
     const onChangeSlider = useCallback((e, pref) => {
-        // newPref[pref]  = parseFloat(e.target.value);
         setPreferenceValues({...preferenceValues, [pref]: parseFloat(e.target.value)});
     },
     [preferenceValues]);
@@ -43,9 +35,9 @@ export const LandingPage = () => {
             step: 0.01,
             min: 0,
             max: 1,
-            linearGradientColor: "#2c3e50",
+            linearGradientColor: "#073857",
             rangeBackgroundColor: "#d7dcdf",
-            sliderThumbColor: "#2c3e50",
+            sliderThumbColor: "#073857",
             onChange: (e, pref) => onChangeSlider(e, pref),
         }),
         [onChangeSlider]

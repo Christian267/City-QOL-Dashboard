@@ -1,9 +1,7 @@
 .landing-page {
-    width: 70%;
-    margin: 0 auto 0 auto;
 }
 
-.grid{
+.landing-page .grid{
     width: 70%;
     margin: 0 auto 0 auto;
     display: grid;

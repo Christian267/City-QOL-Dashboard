@@ -1,4 +1,12 @@
+body {
+  background-color: var(--switch-bgDarkModeColor);
+}
+
 .App {
-  padding: 20px;
   text-align: left;
+  height: 100%;
+  width: 80%;
+  margin: 0 auto 0 auto;
+
+  color: var(--page-header-txtColor);
 }
