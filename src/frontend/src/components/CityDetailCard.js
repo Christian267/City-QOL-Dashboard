@@ -15,11 +15,9 @@ export const CityDetailCard = ({city, topPreferences}) => {
     
     return (
         <div className="city-detail-card">
-            <h3>Your Top City</h3>
-            <h4>{city ? city.uaName + ', ' + city.uaCountry + ', Score = ' + Math.round(city.score*100)/100 : 'Loading...'}</h4>
-            {topPreferences
-            .map(element => 
-            <h5 key={element['pref']}>{separateCamelCaseWord(element['pref']) + ': '} {Math.round(city[element['pref']]*100)/100}</h5>
+            <h3>Your Top City: {city.uaName + ', ' + city.uaCountry}</h3>
+            {topPreferences.map(element => 
+            <h5 key={element['pref']}>{separateCamelCaseWord(element['pref']) + ': '} <span>{Math.round(city[element['pref']]*100)/100}</span></h5>
             )}
 
             {/* <h5>Business Freedom {city ? Math.round(city['businessFreedom']*100)/100 : 'loading...'}</h5>

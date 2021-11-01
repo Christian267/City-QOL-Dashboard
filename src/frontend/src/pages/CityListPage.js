@@ -59,7 +59,7 @@ export const CityListPage = () => {
 
     const changeDisplayCount = useCallback((increment) => {
         const maxCount = preferredCities.length;
-        const step = 10;
+        const step = 12;
         if (increment && displayCount <= maxCount - step) {
             setDisplayCount(displayCount + step);
         }
@@ -123,7 +123,7 @@ export const CityListPage = () => {
         [onChangeSlider]
     );
 
-    const detailCardProps = useMemo(
+    const cardProps = useMemo(
         () => ({
             city: preferredCities[0],
             topPreferences: topThreePreferences()
@@ -144,39 +144,46 @@ export const CityListPage = () => {
 
     return (
         <div className="city-list-page">
-            <div className="card-grid">
-                <h1>Cities Ranked on Preference</h1>
+            <div className="topbar">
+                <h1 className="city-list-title">Cities Ranked on Preference</h1>
                 <h4 className="modal-button" onClick={openModal}>Adjust your preferences</h4>
-                <div ref={modalRef} className="modal">
-                    <div className="modal-content">
-                        <div className="modal-header">
-                            <span className="close" onClick={closeModal}>&times;</span>
-                            <h2>Adjust Your Preferences</h2>
-                        </div>
-                        <div className="modal-body">
-                            {Array(1).fill(Object.keys(defaultPreferences)
-                            .map(pref => <PreferenceSlider 
-                                            key={pref + '-slider'} 
-                                            value={preferences[pref]} 
-                                            name={pref} 
-                                            {...sliderProps} 
-                                        />
-                                    )
-                                )
-                            }
-                        </div>
-                        <div className="modal-footer">
-                            <h3>Filter By:</h3>
-                        </div>
+            </div>
+            <div ref={modalRef} className="modal">
+                <div className="modal-content">
+                    <div className="modal-header">
+                        <span className="close" onClick={closeModal}>&times;</span>
+                        <h2>Adjust Your Preferences</h2>
                     </div>
-
+                    <div className="modal-body">
+                        {Array(1).fill(Object.keys(defaultPreferences)
+                        .map(pref => <PreferenceSlider 
+                                        key={pref + '-slider'} 
+                                        value={preferences[pref]} 
+                                        name={pref} 
+                                        {...sliderProps} 
+                                    />
+                                )
+                            )
+                        }
+                    </div>
+                    <div className="modal-footer">
+                        <h3>Filter By:</h3>
+                    </div>
                 </div>
-                <CityDetailCard key="active-card" {...detailCardProps} />
+
+            </div>
+            <CityDetailCard 
+                key="active-card" 
+                {...cardProps} 
+            />
+
+            <div className="card-grid">
                 {preferredCities.slice(1, displayCount)
                 .map(city => <CitySmallCard 
                                 key={city.uaName + city.uaCountry} 
                                 city={city}
                                 index={preferredCities.indexOf(city) + 1} 
+                                topThreePreferences = {cardProps['topPreferences']}
                             />
                     )
                 }
@@ -186,14 +193,14 @@ export const CityListPage = () => {
                         onClick={() => changeDisplayCount(true)} 
                         style={{display: displayCount===preferredCities.length ? 'none' : 'inline'}}
                         >
-                        show more
+                        Show More
                     </span>
                     <span 
                         className="show-less" 
                         onClick={() => changeDisplayCount(false)} 
                         style={{display: displayCount===minDisplayCount ? 'none' : 'inline'}}
                         >
-                        show less
+                        Show Less
                     </span>
                 </div>
             </div>
