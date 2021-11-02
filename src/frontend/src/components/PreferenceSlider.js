@@ -1,6 +1,7 @@
 import { React, useEffect, useRef, useCallback } from 'react';
 import { createUseStyles } from 'react-jss';
 import { separateCamelCaseWord } from '../helperFunctions/helper';
+import { preferenceDescriptions } from '../helperFunctions/PreferenceDescriptions';
 import './PreferenceSlider.css';
 
 export const PreferenceSlider = ({value, 
@@ -12,6 +13,8 @@ export const PreferenceSlider = ({value,
                                   rangeBackgroundColor,
                                   sliderThumbColor,
                                   onChange}) => {
+
+    const descriptions = preferenceDescriptions();
 
     const useStyles = createUseStyles({
         preferenceSlider: {
@@ -67,7 +70,7 @@ export const PreferenceSlider = ({value,
     
         <div className="slider-container" onScroll={handleScrollChange}>
             <h4 className="preference-text">{separateCamelCaseWord(name)}
-                <span className="tooltip-text">TOOLTIP TEXT</span>
+                <span className="tooltip-text">{descriptions[name]}</span>
             </h4>
             <input 
                 ref={preferenceRef}

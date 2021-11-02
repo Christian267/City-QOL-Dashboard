@@ -1,5 +1,6 @@
-import { React, useState, useCallback } from 'react';
+import { React, useState, useCallback, useMemo } from 'react';
 import { separateCamelCaseWord } from '../helperFunctions/helper';
+import { ScoreBar } from './ScoreBar';
 
 export const CitySmallCard = ({city, index, topThreePreferences}) => {
 
@@ -19,23 +20,20 @@ export const CitySmallCard = ({city, index, topThreePreferences}) => {
         }
     const cityNameCountry = city.uaName + ', ' + city.uaCountry;
     const cityScore = ', Score = ' + Math.round(city.score*100)/100;
+
     return (
         <div className="city-small-card">
             <div className="small-card-title">
                 <span>{index}. {cityNameCountry}</span>
                 <span className="small-card-toggle" onClick={() => toggleDisplay(false)}>{!displayMore ? 'show details' : 'hide details'}</span>
             </div>
-            {topThreePreferences.map(element => 
-                <p 
-                    key={element['pref']}
-                    style={{display: displayMore ? 'inline' : 'none'}}
-                    >
-                    {separateCamelCaseWord(element['pref']) + ': '} 
-                    <span>{Math.round(city[element['pref']]*100)/100}</span>
-                </p>
-                )
-            }
-            <p className="see-more-button" style={{display: displayMore ? 'inline' : 'none'}}>See More</p>
+            <div style={{display: displayMore ? 'block' : 'none'}}>
+                {topThreePreferences.map(element => 
+                    <ScoreBar preference={element['pref']} score={Math.round(city[element['pref']]*100)/100}/>
+                    )
+                }
+                <p className="see-more-button">See More</p>
+            </div>
         </div>
     )
 }

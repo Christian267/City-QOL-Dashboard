@@ -24,7 +24,7 @@
   width: 80%;
   align-self: center;
   margin: 30px 10% 30px 10%;
-  padding: 5px 0px 5px 10px;
+  padding: 1em;
   background: var(--tile-background-color);
   border-radius: var(--border-radius);
   box-shadow: var(--box-shadow);
@@ -48,9 +48,6 @@
 }
 
 .city-list-page .card-grid .city-small-card {
-  display: grid;
-  
-  grid-template-columns: repeat(2, 1fr);
   grid-gap: 10px;
   background: var(--tile-background-color);
   border-radius: var(--border-radius);
@@ -63,6 +60,7 @@
 .city-small-card .small-card-title {
   position: relative;
   grid-column: span 2;
+  font-size: 18px;
 }
 
 .small-card-title .small-card-toggle {
@@ -86,6 +84,22 @@
   text-decoration: underline;
 }
 
+.preference-row {
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+  gap: 5px;
+}
+
+.preference-row .small-card-preference {
+  flex: 3 3 1em;
+}
+
+.preference-row .score-bar {
+  flex: 4 4 0.1em;
+  max-height: 1.5em;
+}
+
 .modal-button {
     width: auto;
     display: inline-block;
@@ -107,7 +121,7 @@
     /* filter: brightness(1.03); */
 }
 
-.modal {
+.slider-modal {
   display: none;
   position: fixed;
   z-index: 1;

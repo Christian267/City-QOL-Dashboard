@@ -1,7 +1,7 @@
 [] Build Landing Page (/home)
-    [] Create sliders
+    [X] Create sliders
         [X] Connect sliders to state of page
-        [] Tooltip explaining each preference slider
+        [X] Tooltip explaining each preference slider
     [] Pass preference data to /cityList
         https://stackoverflow.com/questions/42173786/react-router-pass-data-when-navigating-programmatically
     [] Styles
@@ -11,9 +11,9 @@
         [X] Display top preference categories
     [X] Button for expanding the number of cities displayed (+collapse button)
     [] Display next 4 cities
-        [] expandable/collapsible detail
+        [X] expandable/collapsible detail
         [] Link to their own page (/city/<cityName>/country/<countryName>)
-    [] Make modal close on click outside https://stackoverflow.com/questions/32553158/detect-click-outside-react-component
+    [] Add Filtering option (e.g. exclude countries in North America)
     [] Styles
 [] Build /city page
     [] Give it basic structure

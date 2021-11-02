@@ -1,5 +1,6 @@
 import { React } from 'react';
 import { separateCamelCaseWord } from '../helperFunctions/helper';
+import { ScoreBar } from './ScoreBar';
 
 export const CityDetailCard = ({city, topPreferences}) => {
 
@@ -17,7 +18,7 @@ export const CityDetailCard = ({city, topPreferences}) => {
         <div className="city-detail-card">
             <h3>Your Top City: {city.uaName + ', ' + city.uaCountry}</h3>
             {topPreferences.map(element => 
-            <h5 key={element['pref']}>{separateCamelCaseWord(element['pref']) + ': '} <span>{Math.round(city[element['pref']]*100)/100}</span></h5>
+            <ScoreBar preference={element['pref']} score={Math.round(city[element['pref']]*100)/100} />
             )}
 
             {/* <h5>Business Freedom {city ? Math.round(city['businessFreedom']*100)/100 : 'loading...'}</h5>
