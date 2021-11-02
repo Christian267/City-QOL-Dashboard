@@ -21,15 +21,22 @@ export const ScoreBar = ({preference, score}) => {
         tolerance: "#e70c26",
         travelConnectivity: "#7adc29",
         ventureCapital: "#d2ed31"
-    }
-
+    };
+    // environmental quality: 6.34/10  30 - 14
+    // commute: 6/10
+    const stringLength = separateCamelCaseWord(preference).length + score.toString().length + 2;
+    const padding = 30 - stringLength;
+    var paddedString = separateCamelCaseWord(preference) + ': ' + score.toString().padStart(padding, '!') + '/10';
+    // console.log(preference + ': ' + score.toString());
+    console.log(paddedString);
+    
     return(
         <div key={preference} className="preference-row" >
             <div
                 className="card-preference"
                 key={preference}
                 >
-                {separateCamelCaseWord(preference)}: {(score)}/10
+                {separateCamelCaseWord(preference)}: {score}/10
             </div>
             <div 
                 key={score} 

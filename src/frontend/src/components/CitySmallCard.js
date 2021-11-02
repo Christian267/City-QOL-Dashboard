@@ -29,7 +29,7 @@ export const CitySmallCard = ({city, index, topThreePreferences}) => {
             </div>
             <div style={{display: displayMore ? 'block' : 'none'}}>
                 {topThreePreferences.map(element => 
-                    <ScoreBar preference={element['pref']} score={Math.round(city[element['pref']]*100)/100}/>
+                    <ScoreBar key={element['pref']} preference={element['pref']} score={Math.round(city[element['pref']]*100)/100}/>
                     )
                 }
                 <p className="see-more-button">See More</p>
