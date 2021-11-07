@@ -18,8 +18,8 @@
 
 .city-list-page .city-detail-card {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(380px, 32%));
-  grid-gap: 20px;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 30px;
   min-height: 300px;
   height: auto;
   width: 100%;
@@ -33,11 +33,14 @@
   
 }
 
+.city-detail-card .preference-row {
+}
+
 
 
 .city-list-page .city-detail-card h3 {
   grid-column: 1 / -1;
-  margin: 0 10px 0 10px;
+  margin: 0 10px 20px 10px;
   height: 40px;
   font-size: 30px;
   
@@ -90,18 +93,19 @@
 
 .preference-row {
   display: flex;
+  justify-content: space-between;
   align-items: center;
   margin-top: 10px;
   gap: 5px;
 }
 
 .preference-row .small-card-preference {
-  flex: 3 3 1em;
 }
 
 .preference-row .score-bar {
-  flex: 4 4 0.1em;
+  align-self: center;
   max-height: 1.5em;
+  width: 60%;
 }
 
 .modal-button {

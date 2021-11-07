@@ -52,5 +52,5 @@ export const LandingPage = () => {
                 .map(pref => <PreferenceSlider key={pref + '-slider'} value={preferenceValues[pref]} name={pref} {...sliderProps} />))}
             </div>
         </div>
-    )
+    );
 }

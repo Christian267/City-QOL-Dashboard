@@ -108,9 +108,9 @@ export const CityListPage = () => {
 
 
 
-    const topThreePreferences = useCallback(() => {
+    const sortedPreferences = useCallback(() => {
         var sorted = Object.keys(preferences);
-        sorted = sorted.sort((a, b) => preferences[a] > preferences[b] ? -1 : 1).slice(0, 3);
+        sorted = sorted.sort((a, b) => preferences[a] > preferences[b] ? -1 : 1);
         const newSorted = [];
         for (let pref of sorted) {
             newSorted.push({ pref: pref });
@@ -135,9 +135,9 @@ export const CityListPage = () => {
     const cardProps = useMemo(
         () => ({
             city: preferredCities[0],
-            topPreferences: topThreePreferences()
+            sortedPreferences: sortedPreferences(),
         }),
-        [preferredCities, topThreePreferences]
+        [preferredCities, sortedPreferences]
     )
 
     if (preferredCities.length === 1) {
@@ -208,7 +208,7 @@ export const CityListPage = () => {
                                 key={city.uaName + city.uaCountry} 
                                 city={city}
                                 index={preferredCities.indexOf(city) + 1} 
-                                topThreePreferences = {cardProps['topPreferences']}
+                                sortedPreferences = {cardProps['sortedPreferences']}
                             />
                     )
                 }

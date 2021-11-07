@@ -36,7 +36,7 @@ export const ScoreBar = ({preference, score}) => {
                 className="card-preference"
                 key={preference}
                 >
-                {separateCamelCaseWord(preference)}: {score}/10
+                {separateCamelCaseWord(preference)}
             </div>
             <div 
                 key={score} 
@@ -45,7 +45,7 @@ export const ScoreBar = ({preference, score}) => {
                     background: `linear-gradient(to right, ${colors[preference]} ${score*10}%, #eee ${score}% ${100 - score*10}%)`,
                     color: colors[preference]}}
                     >
-                    1
+                    .
             </div>
         </div>
     )

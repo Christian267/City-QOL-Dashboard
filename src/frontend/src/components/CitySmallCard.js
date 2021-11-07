@@ -2,8 +2,7 @@ import { React, useState, useCallback, useMemo } from 'react';
 import { separateCamelCaseWord } from '../helperFunctions/helper';
 import { ScoreBar } from './ScoreBar';
 
-export const CitySmallCard = ({city, index, topThreePreferences}) => {
-
+export const CitySmallCard = ({city, index, sortedPreferences}) => {
     const [displayMore, setDisplayMore] = useState(false);
 
     const toggleDisplay = useCallback(() => {
@@ -28,7 +27,7 @@ export const CitySmallCard = ({city, index, topThreePreferences}) => {
                 <span className="small-card-toggle" onClick={() => toggleDisplay(false)}>{!displayMore ? 'show details' : 'hide details'}</span>
             </div>
             <div style={{display: displayMore ? 'block' : 'none'}}>
-                {topThreePreferences.map(element => 
+                {sortedPreferences.slice(0, 3).map(element => 
                     <ScoreBar key={element['pref']} preference={element['pref']} score={Math.round(city[element['pref']]*100)/100}/>
                     )
                 }
