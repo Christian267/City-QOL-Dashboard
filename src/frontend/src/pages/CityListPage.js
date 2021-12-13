@@ -124,9 +124,9 @@ export const CityListPage = () => {
             step: 0.01,
             min: 0,
             max: 1,
-            linearGradientColor: "#073857",
+            linearGradientColor: "#0a71b1",
             rangeBackgroundColor: "#d7dcdf",
-            sliderThumbColor: "#073857",
+            sliderThumbColor: "#0a71b1",
             onChange: (e, pref) => onChangeSlider(e, pref),
         }),
         [onChangeSlider]
@@ -140,6 +140,33 @@ export const CityListPage = () => {
         [preferredCities, sortedPreferences]
     )
 
+    const cityModal = () => {
+        return (
+            <div className="slider-modal">
+                <div className="modal-content">
+                    <div className="modal-header">
+                        <span className="close" onClick={closeSliderModal}>&times;</span>
+                        <h2>Adjust Your Preferences</h2>
+                    </div>
+                    <div className="modal-body">
+                        {Array(1).fill(Object.keys(defaultPreferences)
+                        .map(pref => <PreferenceSlider 
+                                        key={pref + '-slider'} 
+                                        value={preferences[pref]} 
+                                        name={pref} 
+                                        {...sliderProps} 
+                                    />
+                                )
+                            )
+                        }
+                    </div>
+                    <div className="modal-footer">
+                        <h3>Filter By:</h3>
+                    </div>
+                </div>
+            </div>
+    )
+    }
     if (preferredCities.length === 1) {
         return (
             <div className="city-list-page">
@@ -175,9 +202,6 @@ export const CityListPage = () => {
                                 )
                             )
                         }
-                    </div>
-                    <div className="modal-footer">
-                        <h3>Filter By:</h3>
                     </div>
                 </div>
 

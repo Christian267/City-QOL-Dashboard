@@ -35,9 +35,9 @@ export const LandingPage = () => {
             step: 0.01,
             min: 0,
             max: 1,
-            linearGradientColor: "#073857",
+            linearGradientColor: "#0a71b1",
             rangeBackgroundColor: "#d7dcdf",
-            sliderThumbColor: "#073857",
+            sliderThumbColor: "#0a71b1",
             onChange: (e, pref) => onChangeSlider(e, pref),
         }),
         [onChangeSlider]
@@ -45,8 +45,7 @@ export const LandingPage = () => {
 
     return (
         <div className="landing-page">
-            <h2>Adjust your preferences on what you care about in a city</h2>
-            <h6>{JSON.stringify(preferenceValues)}</h6>
+            <h2>Choose your city preferences</h2>
             <div className="grid">
                 {Array(1).fill(Object.keys(defaultPreferences)
                 .map(pref => <PreferenceSlider key={pref + '-slider'} value={preferenceValues[pref]} name={pref} {...sliderProps} />))}

@@ -1,0 +1,8 @@
+@teleport = https://api.teleport.org/api/urban_areas
+@google = https://maps.googleapis.com/maps/api/place/photo?parameters
+get {{teleport}}/slug:san-francisco-bay-area/scores/
+
+###
+
+
+get {{teleport}}/slug:san-francisco-bay-area/images/

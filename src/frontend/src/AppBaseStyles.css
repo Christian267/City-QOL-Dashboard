@@ -1,8 +1,8 @@
 :root {
-    --page-header-bgColor: #073857;
+    --page-header-bgColor: #0a71b1;
     --page-header-bgColor-hover: #042b42;
-    --page-header-txtColor: #e4edf8;
-    --page-header-headingColor: #7889a4;
+    --page-header-txtColor: #d4dfeb;
+    --page-header-headingColor: #6c7b94;
     --page-header-width: 220px;
     --page-content-bgColor: #f0f1f6;
     --page-content-txtColor: #171616;
@@ -16,11 +16,11 @@
     --switch-bgLightModeColor: #87cefa;
     --switch-sunColor: gold;
     --switch-moonColor: #f4f4f4;
-    --switch-bgDarkModeColor: #15151a;
+    --switch-bgDarkModeColor: #060607;
     --primary-color: #bb86fc;
     --primary-color-variant: #3700b3;
-    --secondary-color: #073857;
-    --tile-background-color: #292930;
+    --secondary-color: #0a71b1;
+    --tile-background-color: #19191d;
   }
   
   * {

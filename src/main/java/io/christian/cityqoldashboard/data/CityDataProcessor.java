@@ -32,6 +32,7 @@ public class CityDataProcessor implements ItemProcessor<CityInput, City> {
         city.setEconomy(Float.parseFloat(cityInput.getEconomy()));
         city.setTaxation(Float.parseFloat(cityInput.getTaxation()));
         city.setInternetAccess(Float.parseFloat(cityInput.getInternetAccess()));
+        city.setLeisureCulture(Float.parseFloat(cityInput.getLeisureCulture()));
         city.setTolerance(Float.parseFloat(cityInput.getTolerance()));
         city.setOutdoors(Float.parseFloat(cityInput.getOutdoors()));
         return city;
