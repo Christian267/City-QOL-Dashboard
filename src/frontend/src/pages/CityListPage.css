@@ -25,7 +25,7 @@
   width: 100%;
   align-self: center;
   margin: 30px 0 30px 0;
-  padding: 1em;
+  padding: 1em 2em 1.5em 1.5em;
   overflow: auto;
   background: var(--tile-background-color);
   border-radius: var(--border-radius);
@@ -41,9 +41,8 @@
 .city-list-page .city-detail-card h3 {
   grid-column: 1 / -1;
   margin: 0 10px 20px 10px;
-  height: 40px;
+  min-height: 40px;
   font-size: 30px;
-  
 }
 
 .city-list-page .card-grid {
@@ -187,7 +186,7 @@
 }
 
 .modal-header {
-  padding: 10px 20px;
+  padding: 1px 20px;
   background-color: var(--secondary-color);
   text-align: center;
   color: #e0e6e9;

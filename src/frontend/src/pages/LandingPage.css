@@ -1,11 +1,44 @@
 .landing-page {
+    display: flex;
+    flex-direction: column;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    margin-top: .5em;
 }
 
-.landing-page .grid{
+h2 {
+    width: 100%;
+    text-align: center;
+    margin: 1em 0;
+}
+
+.landing-page .grid {
     width: 70%;
-    margin: 0 auto 0 auto;
+    margin: 0 auto;
     display: grid;
     grid-template-columns: repeat(auto-fill, 110px);
     grid-gap: 10px;
     grid-auto-rows: minmax(50px, auto);
+}
+
+.link-btn {
+    width: auto;
+    display: inline-block;
+    margin: 1.5em 0;
+    padding: 0.55em .8em;
+    text-decoration: none;
+    color: var(--primary-color);
+    background: var(--tile-background-color);
+    border: solid 2px var(--primary-color);
+    border-radius: 4px;
+    transition: 0.3s;
+    cursor: pointer;
+    align-self: center;
+}
+
+.link-btn:hover {
+    background: var(--primary-color);
+    color: var(--primary-color-variant);
+    transition: 0.15s;
+    /* filter: brightness(1.03); */
 }

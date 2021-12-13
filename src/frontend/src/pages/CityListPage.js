@@ -37,7 +37,6 @@ export const CityListPage = () => {
     const [displayCount, setDisplayCount] = useState(minDisplayCount);
 
     const sliderModalRef = useRef();
-    const filterModalRef = useRef();
 
     const openSliderModal = () => {
         sliderModalRef.current.style.display = 'block'; 
@@ -45,14 +44,6 @@ export const CityListPage = () => {
 
     const closeSliderModal = () => {
         sliderModalRef.current.style.display = 'none';
-    }
-       
-    const openFilterModal = () => {
-        filterModalRef.current.style.display = 'block'; 
-    };
-
-    const closeFilterModal = () => {
-        filterModalRef.current.style.display = 'none';
     }
 
     useEffect(() => {
@@ -148,9 +139,6 @@ export const CityListPage = () => {
                             )
                         }
                     </div>
-                    <div className="modal-footer">
-                        <h3>Filter By:</h3>
-                    </div>
                 </div>
             </div>
     )
@@ -169,8 +157,7 @@ export const CityListPage = () => {
     return (
         <div className="city-list-page">
             <div className="topbar">
-                <h1 className="city-list-title">Cities Ranked on Preference</h1>
-                <h4 className="modal-button" onClick={openFilterModal}>Filter</h4>
+                <h1 className="city-list-title">Your Preferred Cities</h1>
                 <h4 className="modal-button" onClick={openSliderModal}>Preferences</h4>
             </div>
             <div ref={sliderModalRef} className="slider-modal">
@@ -194,21 +181,7 @@ export const CityListPage = () => {
                 </div>
 
             </div>
-            <div ref={filterModalRef} className="slider-modal">
-                <div className="modal-content">
-                    <div className="modal-header">
-                        <span className="close" onClick={closeFilterModal}>&times;</span>
-                        <h2>Filter</h2>
-                    </div>
-                    <div className="modal-body">
 
-                    </div>
-                    <div className="modal-footer">
-                        <h3>Filter By:</h3>
-                    </div>
-                </div>
-
-            </div>
             <CityDetailCard 
                 key="active-card" 
                 {...cardProps} 

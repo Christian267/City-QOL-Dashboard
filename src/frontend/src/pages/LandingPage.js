@@ -51,10 +51,12 @@ export const LandingPage = () => {
                 {Array(1).fill(Object.keys(defaultPreferences)
                 .map(pref => <PreferenceSlider key={pref + '-slider'} value={preferenceValues[pref]} name={pref} {...sliderProps} />))}
             </div>
-            <Link to={{
-                pathname: '/cityList',
-                state: preferenceValues
-            }}
+            <Link 
+                className="link-btn"
+                to={{
+                    pathname: '/cityList',
+                    state: preferenceValues
+                }}
             >Get City</Link>
         </div>
     );
