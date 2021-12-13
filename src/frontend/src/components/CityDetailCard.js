@@ -1,5 +1,4 @@
 import { React } from 'react';
-import { separateCamelCaseWord } from '../helperFunctions/helper';
 import { ScoreBar } from './ScoreBar';
 
 export const CityDetailCard = ({city, sortedPreferences}) => {

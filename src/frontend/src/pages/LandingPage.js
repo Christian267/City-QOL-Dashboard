@@ -1,4 +1,5 @@
 import { React, useState, useMemo, useCallback} from 'react';
+import { Link } from 'react-router-dom';
 import { PreferenceSlider } from '../components/PreferenceSlider';
 import './LandingPage.css';
 export const LandingPage = () => {
@@ -50,6 +51,11 @@ export const LandingPage = () => {
                 {Array(1).fill(Object.keys(defaultPreferences)
                 .map(pref => <PreferenceSlider key={pref + '-slider'} value={preferenceValues[pref]} name={pref} {...sliderProps} />))}
             </div>
+            <Link to={{
+                pathname: '/cityList',
+                state: preferenceValues
+            }}
+            >Get City</Link>
         </div>
     );
 }

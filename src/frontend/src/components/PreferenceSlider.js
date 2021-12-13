@@ -1,4 +1,4 @@
-import { React, useEffect, useRef, useCallback } from 'react';
+import { React, useEffect, useRef } from 'react';
 import { createUseStyles } from 'react-jss';
 import { separateCamelCaseWord } from '../helperFunctions/helper';
 import { preferenceDescriptions } from '../helperFunctions/PreferenceDescriptions';

@@ -1,12 +1,10 @@
-import { React, useState, useCallback, useMemo } from 'react';
-import { separateCamelCaseWord } from '../helperFunctions/helper';
+import { React, useState, useCallback } from 'react';
 import { ScoreBar } from './ScoreBar';
 
 export const CitySmallCard = ({city, index, sortedPreferences}) => {
     const [displayMore, setDisplayMore] = useState(false);
 
     const toggleDisplay = useCallback(() => {
-        console.log("toggleDisplay");
         setDisplayMore(!displayMore);
     },[displayMore]);
 
@@ -18,7 +16,6 @@ export const CitySmallCard = ({city, index, sortedPreferences}) => {
             )
         }
     const cityNameCountry = city.uaName + ', ' + city.uaCountry;
-    const cityScore = ', Score = ' + Math.round(city.score*100)/100;
 
     return (
         <div className="city-small-card">

@@ -1,4 +1,5 @@
 import { React, useEffect, useState, useMemo, useCallback, useRef } from 'react';
+import { useLocation } from 'react-router-dom';
 import { CityDetailCard } from '../components/CityDetailCard';
 import { CitySmallCard } from '../components/CitySmallCard';
 import { PreferenceSlider } from '../components/PreferenceSlider';
@@ -25,8 +26,12 @@ export const CityListPage = () => {
         travelConnectivity: 0.5,
         ventureCapital: 0.5
     };
+
+    const userPreferences = useLocation();
+
+    
     const minDisplayCount = 6;
-    const [preferences, setPreferences] = useState(defaultPreferences);
+    const [preferences, setPreferences] = useState(userPreferences.state ? userPreferences.state : defaultPreferences);
     const [preferredCities, setPreferredCities] = useState([{}]);
     const [cityLoadError, setCityLoadError] = useState();
     const [displayCount, setDisplayCount] = useState(minDisplayCount);
@@ -56,14 +61,14 @@ export const CityListPage = () => {
                 const response = await fetch(`http://localhost:8080/city/`);
                 const data = await response.json();
                 data.sort((a, b) => a.score < b.score ? 1 : -1);
-                console.log(data);
-                setPreferredCities(data);
+                // console.log(data);
+                setPreferredCities(sortPreferredCities(data, preferences));
             } catch (err) {
                 setCityLoadError(err);
             }
         };
         fetchCities();
-    }, []
+    }, [preferences]
     );
 
     const changeDisplayCount = useCallback((increment) => {
@@ -86,27 +91,10 @@ export const CityListPage = () => {
 
     const onChangeSlider = useCallback((e, pref) => {
         setPreferences({ ...preferences, [pref]: parseFloat(e.target.value) });
-        const updateCityScores = () => {
-            const newPreferredCities = preferredCities;
-            for (let i = 0; i < newPreferredCities.length; i++) {
-                var newScore = 0;
-                for (const key of Object.keys(preferences)) {
-                    newScore += newPreferredCities[i][key] * preferences[key];
-                }
-                try {
-                    newPreferredCities[i]['score'] = newScore / 17;
-                } catch (err) {
-                    console.log("Key error, city has no property 'score'");
-                }
-            }
-            newPreferredCities.sort((a, b) => a.score > b.score ? -1 : 1);
-            setPreferredCities(newPreferredCities);
-        };
-        updateCityScores();
+        setPreferredCities(sortPreferredCities(preferredCities, preferences));
     },
         [preferences, preferredCities]);
-
-
+    
 
     const sortedPreferences = useCallback(() => {
         var sorted = Object.keys(preferences);
@@ -256,3 +244,20 @@ export const CityListPage = () => {
         </div>
     );
 }
+
+function sortPreferredCities(cities, preferences) {
+    const newPreferredCities = cities;
+    for (let i = 0; i < newPreferredCities.length; i++) {
+        var newScore = 0;
+        for (const key of Object.keys(preferences)) {
+            newScore += newPreferredCities[i][key] * preferences[key];
+        }
+        try {
+            newPreferredCities[i]['score'] = newScore / 17;
+        } catch (err) {
+            console.log("Key error, city has no property 'score'");
+        }
+    }
+    newPreferredCities.sort((a, b) => a.score > b.score ? -1 : 1);
+    return newPreferredCities;
+};
