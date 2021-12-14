@@ -29,14 +29,25 @@ export const CityListPage = () => {
 
     const userPreferences = useLocation();
 
+    const continentFilters = {
+        "Asia": false,
+        "North America": false,
+        "South America": false,
+        "Africa": false,
+        "Europe": false,
+        "Oceania": false
+    }
     
     const minDisplayCount = 6;
     const [preferences, setPreferences] = useState(userPreferences.state ? userPreferences.state : defaultPreferences);
     const [preferredCities, setPreferredCities] = useState([{}]);
+    const [filters, setFilters] = useState(continentFilters);
+    const [filteredCities, setFilteredCities] = useState([{}]);
     const [cityLoadError, setCityLoadError] = useState();
     const [displayCount, setDisplayCount] = useState(minDisplayCount);
 
     const sliderModalRef = useRef();
+    const filterModalRef = useRef();
 
     const openSliderModal = () => {
         sliderModalRef.current.style.display = 'block'; 
@@ -46,14 +57,22 @@ export const CityListPage = () => {
         sliderModalRef.current.style.display = 'none';
     }
 
+    const openFilterModal = () => {
+        filterModalRef.current.style.display = 'block'; 
+    };
+
+    const closeFilterModal = () => {
+        filterModalRef.current.style.display = 'none';
+    }
     useEffect(() => {
         const fetchCities = async () => {
             try {
                 const response = await fetch(`http://localhost:8080/city/`);
                 const data = await response.json();
                 data.sort((a, b) => a.score < b.score ? 1 : -1);
-                // console.log(data);
-                setPreferredCities(sortPreferredCities(data, preferences));
+                console.log(data);
+                setPreferredCities(sortCitiesByPreferences(data, preferences));
+                setFilteredCities(sortCitiesByPreferences(data, preferences));
             } catch (err) {
                 setCityLoadError(err);
             }
@@ -63,7 +82,7 @@ export const CityListPage = () => {
     );
 
     const changeDisplayCount = useCallback((increment) => {
-        const maxCount = preferredCities.length;
+        const maxCount = filteredCities.length;
         const step = 12;
         if (increment && displayCount <= maxCount - step) {
             setDisplayCount(displayCount + step);
@@ -77,15 +96,39 @@ export const CityListPage = () => {
         else if(!increment && displayCount > minDisplayCount) {
             setDisplayCount(minDisplayCount);
         }
-    },
-    [displayCount, preferredCities.length]);
+    }, [displayCount, filteredCities.length]
+    );
 
     const onChangeSlider = useCallback((e, pref) => {
         setPreferences({ ...preferences, [pref]: parseFloat(e.target.value) });
-        setPreferredCities(sortPreferredCities(preferredCities, preferences));
-    },
-        [preferences, preferredCities]);
+        setPreferredCities(sortCitiesByPreferences(preferredCities, preferences));
+        setFilteredCities(sortCitiesByPreferences(filteredCities, preferences));
+    }, [preferences, preferredCities, filteredCities]
+    );
     
+    const onChangeFilter = useCallback((e, filter) => {
+        const newFilters = filters;
+        const toggledValue = filters[filter];
+        newFilters[filter] = !newFilters[filter];
+        setFilters({ ...filters, [filter]: !toggledValue });
+        const toggledFilters = [];
+        for (const [key, value] of Object.entries(newFilters)) {
+            if (value === true) toggledFilters.push(key);
+        }
+        if (toggledFilters.length > 0) {
+            const newFilteredCities = [];
+            for (const city of preferredCities) {
+                if (toggledFilters.includes(city.uaContinent)) newFilteredCities.push(city);
+            }
+            if (displayCount > newFilteredCities.length) setDisplayCount(newFilteredCities.length);
+            setFilteredCities(newFilteredCities);
+        }
+        else {
+            setFilteredCities(preferredCities);
+        }
+
+    }, [filters, preferredCities, displayCount]
+    );
 
     const sortedPreferences = useCallback(() => {
         var sorted = Object.keys(preferences);
@@ -95,11 +138,10 @@ export const CityListPage = () => {
             newSorted.push({ pref: pref });
         }
         return newSorted;
-    },
-        [preferences]);
+    }, [preferences]
+    );
 
-    const sliderProps = useMemo(
-        () => ({
+    const sliderProps = useMemo(() => ({
             step: 0.01,
             min: 0,
             max: 1,
@@ -107,16 +149,13 @@ export const CityListPage = () => {
             rangeBackgroundColor: "#d7dcdf",
             sliderThumbColor: "#0a71b1",
             onChange: (e, pref) => onChangeSlider(e, pref),
-        }),
-        [onChangeSlider]
+        }), [onChangeSlider]
     );
 
-    const cardProps = useMemo(
-        () => ({
-            city: preferredCities[0],
+    const cardProps = useMemo(() => ({
+            city: filteredCities[0],
             sortedPreferences: sortedPreferences(),
-        }),
-        [preferredCities, sortedPreferences]
+        }), [filteredCities, sortedPreferences]
     )
 
     const cityModal = () => {
@@ -128,15 +167,13 @@ export const CityListPage = () => {
                         <h2>Adjust Your Preferences</h2>
                     </div>
                     <div className="modal-body">
-                        {Array(1).fill(Object.keys(defaultPreferences)
+                        {Object.keys(defaultPreferences)
                         .map(pref => <PreferenceSlider 
-                                        key={pref + '-slider'} 
-                                        value={preferences[pref]} 
-                                        name={pref} 
-                                        {...sliderProps} 
-                                    />
-                                )
-                            )
+                            key={pref + '-slider'} 
+                            value={preferences[pref]} 
+                            name={pref} 
+                            {...sliderProps} 
+                            />)
                         }
                     </div>
                 </div>
@@ -158,6 +195,8 @@ export const CityListPage = () => {
         <div className="city-list-page">
             <div className="topbar">
                 <h1 className="city-list-title">Your Preferred Cities</h1>
+                <h1> Display Count {displayCount} </h1>
+                <h4 className="modal-button" onClick={openFilterModal}>Filter</h4>
                 <h4 className="modal-button" onClick={openSliderModal}>Preferences</h4>
             </div>
             <div ref={sliderModalRef} className="slider-modal">
@@ -167,32 +206,53 @@ export const CityListPage = () => {
                         <h2>Adjust Your Preferences</h2>
                     </div>
                     <div className="modal-body">
-                        {Array(1).fill(Object.keys(defaultPreferences)
-                        .map(pref => <PreferenceSlider 
-                                        key={pref + '-slider'} 
-                                        value={preferences[pref]} 
-                                        name={pref} 
-                                        {...sliderProps} 
-                                    />
-                                )
-                            )
-                        }
+                        {Object.keys(defaultPreferences).map(pref => 
+                        <PreferenceSlider 
+                            key={pref + '-slider'} 
+                            value={preferences[pref]} 
+                            name={pref} 
+                            {...sliderProps} 
+                        />)
+                         }
                     </div>
                 </div>
 
             </div>
-
+            <div ref={filterModalRef} className="filter-modal">
+                <div className="modal-content">
+                    <div className="modal-header">
+                        <span className="close" onClick={closeFilterModal}>&times;</span>
+                        <h2>Filter</h2>
+                    </div>
+                    <div className="modal-body">
+                        {Object.keys(filters).map(filterName =>
+                            <div className="filter-checkbox-container">
+                                <input 
+                                    type="checkbox" 
+                                    id={`${filterName}-checkbox`} 
+                                    name={filterName} 
+                                    value={filterName}
+                                    checked={filters[filterName]}
+                                    onChange={(e) => onChangeFilter(e, filterName)}
+                                />
+                                <label htmlFor={`${filterName}-checkbox`}>{filterName}</label>
+                            </div>
+                            )
+                            }
+                    </div>
+                </div>
+            </div>
             <CityDetailCard 
                 key="active-card" 
                 {...cardProps} 
             />
 
             <div className="card-grid">
-                {preferredCities.slice(1, displayCount)
+                {filteredCities.slice(1, displayCount)
                 .map(city => <CitySmallCard 
                                 key={city.uaName + city.uaCountry} 
                                 city={city}
-                                index={preferredCities.indexOf(city) + 1} 
+                                index={filteredCities.indexOf(city) + 1} 
                                 sortedPreferences = {cardProps['sortedPreferences']}
                             />
                     )
@@ -201,7 +261,7 @@ export const CityListPage = () => {
                     <span 
                         className="show-more" 
                         onClick={() => changeDisplayCount(true)} 
-                        style={{display: displayCount===preferredCities.length ? 'none' : 'inline'}}
+                        style={{display: displayCount===filteredCities.length ? 'none' : 'inline'}}
                         >
                         Show More
                     </span>
@@ -218,7 +278,7 @@ export const CityListPage = () => {
     );
 }
 
-function sortPreferredCities(cities, preferences) {
+function sortCitiesByPreferences(cities, preferences) {
     const newPreferredCities = cities;
     for (let i = 0; i < newPreferredCities.length; i++) {
         var newScore = 0;

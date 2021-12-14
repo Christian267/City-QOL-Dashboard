@@ -48,8 +48,13 @@ export const LandingPage = () => {
         <div className="landing-page">
             <h2>Choose your city preferences</h2>
             <div className="grid">
-                {Array(1).fill(Object.keys(defaultPreferences)
-                .map(pref => <PreferenceSlider key={pref + '-slider'} value={preferenceValues[pref]} name={pref} {...sliderProps} />))}
+                {Object.keys(defaultPreferences).map(pref => 
+                <PreferenceSlider 
+                    key={pref + '-slider'} 
+                    value={preferenceValues[pref]} 
+                    name={pref} {...sliderProps} 
+                />)
+                }
             </div>
             <Link 
                 className="link-btn"
@@ -57,7 +62,9 @@ export const LandingPage = () => {
                     pathname: '/cityList',
                     state: preferenceValues
                 }}
-            >Get City</Link>
+            >
+            Discover My Cities
+            </Link>
         </div>
     );
 }
