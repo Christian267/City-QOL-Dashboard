@@ -158,28 +158,28 @@ export const CityListPage = () => {
         }), [filteredCities, sortedPreferences]
     )
 
-    const cityModal = () => {
-        return (
-            <div className="slider-modal">
-                <div className="modal-content">
-                    <div className="modal-header">
-                        <span className="close" onClick={closeSliderModal}>&times;</span>
-                        <h2>Adjust Your Preferences</h2>
-                    </div>
-                    <div className="modal-body">
-                        {Object.keys(defaultPreferences)
-                        .map(pref => <PreferenceSlider 
-                            key={pref + '-slider'} 
-                            value={preferences[pref]} 
-                            name={pref} 
-                            {...sliderProps} 
-                            />)
-                        }
-                    </div>
-                </div>
-            </div>
-    )
-    }
+    // const cityModal = () => {
+    //     return (
+    //         <div className="slider-modal">
+    //             <div className="modal-content">
+    //                 <div className="modal-header">
+    //                     <span className="close" onClick={closeSliderModal}>&times;</span>
+    //                     <h2>Adjust Your Preferences</h2>
+    //                 </div>
+    //                 <div className="modal-body">
+    //                     {Object.keys(defaultPreferences)
+    //                     .map(pref => <PreferenceSlider 
+    //                         key={pref + '-slider'} 
+    //                         value={preferences[pref]} 
+    //                         name={pref} 
+    //                         {...sliderProps} 
+    //                         />)
+    //                     }
+    //                 </div>
+    //             </div>
+    //         </div>
+    // )
+    // }
     if (preferredCities.length === 1) {
         return (
             <div className="city-list-page">
@@ -195,7 +195,6 @@ export const CityListPage = () => {
         <div className="city-list-page">
             <div className="topbar">
                 <h1 className="city-list-title">Your Preferred Cities</h1>
-                <h1> Display Count {displayCount} </h1>
                 <h4 className="modal-button" onClick={openFilterModal}>Filter</h4>
                 <h4 className="modal-button" onClick={openSliderModal}>Preferences</h4>
             </div>
@@ -222,11 +221,11 @@ export const CityListPage = () => {
                 <div className="modal-content">
                     <div className="modal-header">
                         <span className="close" onClick={closeFilterModal}>&times;</span>
-                        <h2>Filter</h2>
+                        <h2>Filter By Continent</h2>
                     </div>
                     <div className="modal-body">
                         {Object.keys(filters).map(filterName =>
-                            <div className="filter-checkbox-container">
+                            <div key={filterName} className="filter-checkbox-container">
                                 <input 
                                     type="checkbox" 
                                     id={`${filterName}-checkbox`} 
