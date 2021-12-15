@@ -67,7 +67,7 @@ export const CityListPage = () => {
     useEffect(() => {
         const fetchCities = async () => {
             try {
-                const response = await fetch(`http://localhost:8080/city/`);
+                const response = await fetch(`${process.env.REACT_APP_API_ROOT_URL}/city/`);
                 const data = await response.json();
                 data.sort((a, b) => a.score < b.score ? 1 : -1);
                 console.log(data);

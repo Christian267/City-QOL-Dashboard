@@ -1,6 +1,6 @@
 import './AppBaseStyles.css'
 import './App.css';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { HashRouter, Route, Switch } from 'react-router-dom';
 import { CityListPage } from './pages/CityListPage';
 import { LandingPage } from './pages/LandingPage';
 import { CityPage } from './pages/CityPage';
@@ -11,7 +11,7 @@ function App() {
   
   return (
     <div className="App">
-      <BrowserRouter>
+      <HashRouter>
         <Switch>
           <Route path="/cityList">
             <CityListPage />
@@ -23,7 +23,7 @@ function App() {
           <LandingPage />  
         </Route>
         </Switch>
-      </BrowserRouter>
+      </HashRouter>
     </div>
   );
 }
