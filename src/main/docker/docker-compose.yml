@@ -1,0 +1,37 @@
+version: "3.7"
+services:
+  app:
+    image: "christian267/cityqol_app:latest"
+    build:
+      context: .
+    container_name: city_app
+    depends_on:
+      - db
+    networks:
+      - default
+    ports:
+      - 80:8080
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/city_qol
+      - SPRING_DATASOURCE_USERNAME=christian
+      - SPRING_DATASOURCE_PASSWORD=christian
+      - SPRING_BATCH_JOB_ENABLE=true
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+    restart: always
+  db:
+    image: "postgres:13.1-alpine"
+    container_name: city_database
+    environment:
+      - POSTGRES_USER=christian
+      - POSTGRES_PASSWORD=christian
+      - POSTGRES_DB=city_qol
+    networks:
+      - default
+    ports:
+      - 5432:5432
+    restart: always
+    volumes:
+      - cityqol:/var/lib/postgresql/data/
+    
+volumes:
+  cityqol:
