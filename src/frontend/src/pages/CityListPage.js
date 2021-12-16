@@ -70,7 +70,7 @@ export const CityListPage = () => {
                 const response = await fetch(`${process.env.REACT_APP_API_ROOT_URL}/city/`);
                 const data = await response.json();
                 data.sort((a, b) => a.score < b.score ? 1 : -1);
-                console.log(data);
+                // console.log(data);
                 setPreferredCities(sortCitiesByPreferences(data, preferences));
                 setFilteredCities(sortCitiesByPreferences(data, preferences));
             } catch (err) {
@@ -78,7 +78,7 @@ export const CityListPage = () => {
             }
         };
         fetchCities();
-    }, [preferences]
+    }, []
     );
 
     const changeDisplayCount = useCallback((increment) => {

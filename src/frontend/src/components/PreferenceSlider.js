@@ -38,8 +38,8 @@ export const PreferenceSlider = ({value,
     const valueRef = useRef();
 
     const handleScrollChange = e => {
-        console.log("Scrolled");
-        console.log(e);
+        // console.log("Scrolled");
+        // console.log(e);
         e.target.value += 0.01;
         onChange(e, name);
     };
