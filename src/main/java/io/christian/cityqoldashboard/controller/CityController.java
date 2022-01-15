@@ -3,6 +3,7 @@ package io.christian.cityqoldashboard.controller;
 import java.util.List;
 import java.util.ArrayList;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,7 +16,7 @@ import io.christian.cityqoldashboard.repository.CityRepository;
 @CrossOrigin
 public class CityController {
     
-
+    @Autowired
     CityRepository cityRepository;
 
 
