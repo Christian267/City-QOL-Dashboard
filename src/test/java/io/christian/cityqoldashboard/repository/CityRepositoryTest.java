@@ -1,6 +1,7 @@
-package io.christian.cityqoldashboard;
+package io.christian.cityqoldashboard.repository;
 
-import org.assertj.core.api.Assertions;
+import static org.assertj.core.api.Assertions.assertThat;
+
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -8,19 +9,17 @@ import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInfo;
 import org.junit.jupiter.api.TestReporter;
-import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.test.context.junit4.SpringRunner;
 
-import io.christian.cityqoldashboard.controller.CityController;
- 
-@ExtendWith(SpringExtension.class)
+// @RunWith(SpringRunner.class)
 @SpringBootTest
-public class CityQolDashboardApplicationTests {
- 
+public class CityRepositoryTest {
+
     @Autowired
-    CityController cityController;
+    private CityRepository cityRepository;
     
     TestInfo testInfo;
     TestReporter testReporter;
@@ -41,7 +40,7 @@ public class CityQolDashboardApplicationTests {
     @Tag("Context")
     @DisplayName("load cityController")
     public void contextLoads() {
-
-        Assertions.assertThat(cityController).isNot(null);
+        String str = "hello";
+        assertThat(cityRepository).isNotNull();
     }
 }
