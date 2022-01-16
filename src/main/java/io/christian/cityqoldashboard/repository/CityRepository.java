@@ -11,4 +11,6 @@ import io.christian.cityqoldashboard.model.*;
 public interface CityRepository extends CrudRepository<City, Long>  {
     
     City findByUaNameIgnoreCaseAndUaCountryIgnoreCase(String cityName, String countryName);
+    List<City> findAllByUaCountryIgnoreCase(String countryName);
+    List<City> findAllByUaNameIgnoreCase(String cityName);
 }
